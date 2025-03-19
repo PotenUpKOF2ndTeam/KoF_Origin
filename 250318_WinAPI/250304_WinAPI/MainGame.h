@@ -15,6 +15,7 @@ private:
 
 	Image* backBuffer;
 	Image* backGround;
+
 	Character* player1;
 	Character* player2;
 

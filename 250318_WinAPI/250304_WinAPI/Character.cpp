@@ -1,7 +1,7 @@
 #include "Character.h"
 #include "Image.h"
 
-void Character::Init()
+void Character::Init(PLAYER playerType)
 {
 	weakDamage = 10;
 	strongDamage = 15;
@@ -20,6 +20,8 @@ void Character::Init()
 	isStrongKick = false;
 	isDefend = false;
 	isDead = false;
+	
+	player = playerType;
 
 	image = new Image;
 	if (FAILED(image->Init(TEXT("Image/iori_walk.bmp"), 612, 104, 9, 1,
@@ -113,10 +115,15 @@ void Character::Update(int frame)
 void Character::Render(HDC hdc)
 {
 	//이미지 랜더
-	if (image)
+	if (player == PLAYER::Player1)
 	{
 		image->Render(hdc, pos.x, pos.y, currAnimationFrame, false);
 	}
+
+	else if (player == PLAYER::Player2)
+	{
+		image->Render(hdc, pos.x + 300, pos.y, currAnimationFrame, true);
+	} 
 
 	//점프
 

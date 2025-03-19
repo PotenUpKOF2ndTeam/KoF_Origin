@@ -9,7 +9,8 @@ public:
 	enum class PLAYER : uint8_t
 	{
 		Player1,
-		Player2
+		Player2,
+		END
 	};
 
 private:
@@ -31,11 +32,13 @@ private:
 	bool isDefend;
 	bool isDead;
 
+	PLAYER player;
+
 	Image* image;
 
 
 public:
-	void Init();
+	void Init(PLAYER playerType);
 	void Release();
 	void Update(int frame);
 	void Render(HDC hdc);

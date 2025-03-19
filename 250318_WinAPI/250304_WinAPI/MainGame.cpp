@@ -24,10 +24,10 @@ void MainGame::Init()
 	}
 
 	player1 = new Character();
-	player1->Init();
+	player1->Init(Character::PLAYER::Player1);
 
 	player2 = new Character();
-	player2->Init();
+	player2->Init(Character::PLAYER::Player2);
 }
 
 void MainGame::Release()
