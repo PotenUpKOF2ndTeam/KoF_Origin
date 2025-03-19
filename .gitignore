@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+/.vs
+/250318_WinAPI/.vs/250304_WinAPI
+/250318_WinAPI/x64/Debug
