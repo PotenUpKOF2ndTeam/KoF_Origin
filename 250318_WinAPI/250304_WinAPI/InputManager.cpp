@@ -3,121 +3,85 @@
 const PlayerKeyBind InputManager::player1 = { 'A', 'D', 'W', 'S', 'T', 'Y', 'G', 'H' };
 const PlayerKeyBind InputManager::player2 = { VK_NUMPAD4, VK_NUMPAD6, VK_NUMPAD5, VK_NUMPAD8, '[', ']', ';', '\'' };
 
-bool InputManager::IsPlayer1MoveLeft(void)
+const PlayerKeyBind &InputManager::WhichPlayer(PLAYER player)
 {
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player1.Left)
-        || KeyManager::GetInstance()->IsStayKeyDown(InputManager::player1.Left))
+    if (PLAYER::Player1 == player)
+        return InputManager::player1;
+    return InputManager::player2;
+}
+
+bool InputManager::IsPlayerMoveLeft(PLAYER player)
+{
+    const PlayerKeyBind& character = WhichPlayer(player);
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(character.Left)
+        || KeyManager::GetInstance()->IsStayKeyDown(character.Left))
         return true;
     return false;
 }
 
-bool InputManager::IsPlayer1MoveRight(void)
+bool InputManager::IsPlayerMoveRight(PLAYER player)
 {
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player1.Right)
-        || KeyManager::GetInstance()->IsStayKeyDown(InputManager::player1.Right))
+    const PlayerKeyBind& character = WhichPlayer(player);
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(character.Right)
+        || KeyManager::GetInstance()->IsStayKeyDown(character.Right))
         return true;
     return false;
 }
 
-bool InputManager::IsPlayer1MoveUp(void)
+bool InputManager::IsPlayerMoveUp(PLAYER player)
 {
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player1.Up)
-        || KeyManager::GetInstance()->IsStayKeyDown(InputManager::player1.Up))
+    const PlayerKeyBind& character = WhichPlayer(player);
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(character.Up)
+        || KeyManager::GetInstance()->IsStayKeyDown(character.Up))
         return true;
     return false;
 }
 
-bool InputManager::IsPlayer1MoveDown(void)
+bool InputManager::IsPlayerMoveDown(PLAYER player)
 {
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player1.Down)
-        || KeyManager::GetInstance()->IsStayKeyDown(InputManager::player1.Down))
+    const PlayerKeyBind& character = WhichPlayer(player);
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(character.Down)
+        || KeyManager::GetInstance()->IsStayKeyDown(character.Down))
         return true;
     return false;
 }
 
-bool InputManager::IsPlayer1AttackWeakPunch(void)
+bool InputManager::IsPlayerAttackWeakPunch(PLAYER player)
 {
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player1.WeakPunch))
+    const PlayerKeyBind& character = WhichPlayer(player);
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(character.WeakPunch))
         return true;
     return false;
 }
 
-bool InputManager::IsPlayer1AttackWeakKick(void)
+bool InputManager::IsPlayerAttackWeakKick(PLAYER player)
 {
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player1.WeakKick))
+    const PlayerKeyBind& character = WhichPlayer(player);
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(character.WeakKick))
         return true;
     return false;
 }
 
-bool InputManager::IsPlayer1AttackStrongPunch(void)
+bool InputManager::IsPlayerAttackStrongPunch(PLAYER player)
 {
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player1.StrongPunch))
+    const PlayerKeyBind& character = WhichPlayer(player);
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(character.StrongPunch))
         return true;
     return false;
 }
 
-bool InputManager::IsPlayer1AttackStrongKick(void)
+bool InputManager::IsPlayerAttackStrongKick(PLAYER player)
 {
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player1.StrongKick))
-        return true;
-    return false;
-}
-bool InputManager::IsPlayer2MoveLeft(void)
-{
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player2.Left)
-        || KeyManager::GetInstance()->IsStayKeyDown(InputManager::player2.Left))
-        return true;
-    return false;
-}
+    const PlayerKeyBind& character = WhichPlayer(player);
 
-bool InputManager::IsPlayer2MoveRight(void)
-{
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player2.Right)
-        || KeyManager::GetInstance()->IsStayKeyDown(InputManager::player2.Right))
-        return true;
-    return false;
-}
-
-bool InputManager::IsPlayer2MoveUp(void)
-{
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player2.Up)
-        || KeyManager::GetInstance()->IsStayKeyDown(InputManager::player2.Up))
-        return true;
-    return false;
-}
-
-bool InputManager::IsPlayer2MoveDown(void)
-{
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player2.Down)
-        || KeyManager::GetInstance()->IsStayKeyDown(InputManager::player2.Down))
-        return true;
-    return false;
-}
-
-bool InputManager::IsPlayer2AttackWeakPunch(void)
-{
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player2.WeakPunch))
-        return true;
-    return false;
-}
-
-bool InputManager::IsPlayer2AttackWeakKick(void)
-{
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player2.WeakKick))
-        return true;
-    return false;
-}
-
-bool InputManager::IsPlayer2AttackStrongPunch(void)
-{
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player2.StrongPunch))
-        return true;
-    return false;
-}
-
-bool InputManager::IsPlayer2AttackStrongKick(void)
-{
-    if (KeyManager::GetInstance()->IsOnceKeyDown(InputManager::player2.StrongKick))
+    if (KeyManager::GetInstance()->IsOnceKeyDown(character.StrongKick))
         return true;
     return false;
 }
