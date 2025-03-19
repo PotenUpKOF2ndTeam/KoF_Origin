@@ -85,14 +85,13 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	case WM_TIMER:
 		this->Update();
 		break;
+	case WM_KEYUP:
+		KeyManager::GetInstance()->SetKeyDown(wParam, false);
+		KeyManager::GetInstance()->SetKeyUp(wParam, true);
+		break;
 	case WM_KEYDOWN:
-		switch (wParam)
-		{
-		case 'a': case 'A':
-			break;
-		case 'd': case 'D':
-			break;
-		}
+		KeyManager::GetInstance()->SetKeyDown(wParam, true);
+		KeyManager::GetInstance()->SetKeyUp(wParam, false);
 		break;
 	case WM_LBUTTONDOWN:
 		mousePosX = LOWORD(lParam);
