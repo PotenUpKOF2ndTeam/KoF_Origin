@@ -10,6 +10,7 @@ private:
 	int	HP;
 	POINT pos;
 	int	moveSpeed;
+	int frame;
 	int currAnimationFrame;
 	int elapsedFrame;
 

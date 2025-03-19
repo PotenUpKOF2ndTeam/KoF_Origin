@@ -8,6 +8,7 @@ void Character::Init()
 	HP = 100;
 	pos = { 0,0 };
 	moveSpeed = 5;
+	frame = 0;
 	currAnimationFrame = 0; 
 	elapsedFrame = 0;
 
@@ -34,6 +35,7 @@ void Character::Release()
 void Character::Update()
 {
 	Move();
+	
 
 }
 
