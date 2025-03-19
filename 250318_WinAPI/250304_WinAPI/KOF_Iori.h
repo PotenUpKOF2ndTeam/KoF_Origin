@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "InputManager.h"
 
 class Image;
 class KOF_Iori : public GameObject

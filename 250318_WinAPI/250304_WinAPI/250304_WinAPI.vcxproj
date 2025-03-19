@@ -131,6 +131,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="KOF_Iori.cpp" />
     <ClCompile Include="main.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="KOF_Iori.h" />
     <ClInclude Include="MainGame.h" />
