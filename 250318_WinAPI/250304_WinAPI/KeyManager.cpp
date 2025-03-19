@@ -71,3 +71,13 @@ bool KeyManager::IsStayKeyDown(int key)
     }
     return false;
 }
+
+bool KeyManager::IsPressAnyKey(void)
+{
+    for (int key = 0; key < MAX_KEY_COUNT; ++key)
+    {
+        if (keyDown[key])
+            return true;
+    }
+    return false;
+}

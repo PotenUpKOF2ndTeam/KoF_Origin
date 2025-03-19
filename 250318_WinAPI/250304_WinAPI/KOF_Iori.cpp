@@ -30,11 +30,10 @@ void KOF_Iori::Update()
 {
 	elapsedFrame++;
 	//if (elapsedFrame >= 5)
-	if (KeyManager::GetInstance()->IsOnceKeyUp(VK_SPACE))
+	if (InputManager::IsPlayer1MoveRight())
 	{
 		currAnimaionFrame++;
 		Move();
-
 		if (currAnimaionFrame > 8)
 		{
 			currAnimaionFrame = 0;
