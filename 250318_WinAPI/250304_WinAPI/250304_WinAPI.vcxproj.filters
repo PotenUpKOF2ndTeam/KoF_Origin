@@ -30,16 +30,7 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>2D Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>MainGame</Filter>
-    </ClCompile>
     <ClCompile Include="MainGame.cpp">
-      <Filter>MainGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Missile.cpp">
-      <Filter>MainGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank.cpp">
       <Filter>MainGame</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp">
@@ -65,16 +56,7 @@
     <ClInclude Include="GameObject.h">
       <Filter>2D Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>MainGame</Filter>
-    </ClInclude>
     <ClInclude Include="MainGame.h">
-      <Filter>MainGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Missile.h">
-      <Filter>MainGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank.h">
       <Filter>MainGame</Filter>
     </ClInclude>
     <ClInclude Include="Image.h">
@@ -91,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>2D Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>MainGame\KOF_Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
