@@ -22,6 +22,7 @@ private:
 	static const PlayerKeyBind& WhichPlayer(PLAYER player);
 
 public:
+	virtual ~InputManager() = 0;
 	static bool IsPlayerMoveLeft(PLAYER player);
 	static bool IsPlayerMoveRight(PLAYER player);
 	static bool IsPlayerMoveUp(PLAYER player);
@@ -30,6 +31,7 @@ public:
 	static bool IsPlayerAttackWeakKick(PLAYER player);
 	static bool IsPlayerAttackStrongPunch(PLAYER player);
 	static bool IsPlayerAttackStrongKick(PLAYER player);
+	static bool IsPressAnyKey(void);
 };
 
 
