@@ -1,5 +1,6 @@
 #pragma once
 #include "KeyManager.h"
+#include "Character.h"
 
 typedef struct PlayerKeyBind
 {
@@ -18,25 +19,17 @@ class InputManager
 private:
 	static const struct PlayerKeyBind player1;
 	static const struct PlayerKeyBind player2;
+	static const PlayerKeyBind& WhichPlayer(PLAYER player);
 
 public:
-	static bool IsPlayer1MoveLeft(void);
-	static bool IsPlayer1MoveRight(void);
-	static bool IsPlayer1MoveUp(void);
-	static bool IsPlayer1MoveDown(void);
-	static bool IsPlayer1AttackWeakPunch(void);
-	static bool IsPlayer1AttackWeakKick(void);
-	static bool IsPlayer1AttackStrongPunch(void);
-	static bool IsPlayer1AttackStrongKick(void);
-
-	static bool IsPlayer2MoveLeft(void);
-	static bool IsPlayer2MoveRight(void);
-	static bool IsPlayer2MoveUp(void);
-	static bool IsPlayer2MoveDown(void);
-	static bool IsPlayer2AttackWeakPunch(void);
-	static bool IsPlayer2AttackWeakKick(void);
-	static bool IsPlayer2AttackStrongPunch(void);
-	static bool IsPlayer2AttackStrongKick(void);
+	static bool IsPlayerMoveLeft(PLAYER player);
+	static bool IsPlayerMoveRight(PLAYER player);
+	static bool IsPlayerMoveUp(PLAYER player);
+	static bool IsPlayerMoveDown(PLAYER player);
+	static bool IsPlayerAttackWeakPunch(PLAYER player);
+	static bool IsPlayerAttackWeakKick(PLAYER player);
+	static bool IsPlayerAttackStrongPunch(PLAYER player);
+	static bool IsPlayerAttackStrongKick(PLAYER player);
 };
 
 
