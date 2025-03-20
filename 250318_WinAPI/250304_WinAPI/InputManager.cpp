@@ -85,3 +85,8 @@ bool InputManager::IsPlayerAttackStrongKick(PLAYER player)
         return true;
     return false;
 }
+
+bool InputManager::IsPressAnyKey(void)
+{
+    return KeyManager::GetInstance()->IsPressAnyKey();
+}
