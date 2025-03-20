@@ -30,7 +30,7 @@ void KOF_Iori::Update()
 {
 	elapsedFrame++;
 	//if (elapsedFrame >= 5)
-	if (InputManager::IsPlayerMoveRight(PLAYER::Player1))
+	if (InputManager::IsPlayer1MoveRight())
 	{
 		currAnimaionFrame++;
 		pos.x += moveSpeed;

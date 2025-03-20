@@ -84,10 +84,5 @@ public:
 		}
 		return NULL;
 	}
-
-	inline HBITMAP GetBitMap() 
-	{
-		return imageInfo->hBitmap;
-	}
 };
 
