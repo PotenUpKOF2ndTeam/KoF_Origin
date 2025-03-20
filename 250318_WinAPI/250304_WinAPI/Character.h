@@ -2,49 +2,65 @@
 #include "GameObject.h"
 #include "InputManager.h"
 
+enum class PLAYER : uint8_t
+{
+	Player1,
+	Player2,
+	END
+};
+
 class Image;
 class Character
 {
 public:
-	enum class PLAYER : uint8_t
-	{
-		Player1,
-		Player2,
-		END
-	};
+
 
 private:
 	int weakDamage;
 	int	strongDamage;
 	int	HP;
+	int damage;
 	POINT pos;
 	int	moveSpeed;
-	float frame;
-	float currAnimationFrame;
-	float elapsedFrame;
+	int frame;
+	int currAnimationFrame;
+	int elapsedFrame;
+	int maxAnimationFrame;
 
+	int maxAttackAnimationFrame;
+
+	bool isIdle;
 	bool isMoveRight;
 	bool isMoveLeft;
 	bool isWeakPunch;
 	bool isStrongPunch;
 	bool isWeakKick;
 	bool isStrongKick;
+	bool isAttack;
 	bool isDefend;
 	bool isDead;
 
 	PLAYER player;
 
-	Image* image;
-
+	Image* moveImage;
+	Image* idleImage;
+	Image* weakPunchImage;
+	Image* weakKickImage;
+	Image* strongPunchImage;
+	Image* strongKickImage;
+	Image image;
 
 public:
 	void Init(PLAYER playerType);
 	void Release();
-	void Update(int frame);
+	void Update(HDC hdc, int frame);
 	void Render(HDC hdc);
 	void Move();
 	void OnDamaged(int damage);
 	void Dead();
+	void Attack();
+
+	void Punch();
 	POINT GetPos() { return pos; }
 	int GetWeakDamage() { return weakDamage; }
 	int GetStrongDamage() { return strongDamage; }
@@ -53,6 +69,9 @@ public:
 	bool GetIsStrongKick() { return isStrongKick; }
 	bool GetIsWeakKick() { return isWeakKick; }
 	int GetHP() { return HP; }
+	void SetImage(const wchar_t* filePath, int width, int height, int maxAnimationFrame);
+	
+	int SetMaxAnimationFrame(int maxAnimationFrame) { this->maxAnimationFrame = maxAnimationFrame; }
 
 	void SetUpdateHP();
 
