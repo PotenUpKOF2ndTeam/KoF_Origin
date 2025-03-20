@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Character.h"
 
 class Image;
 class KOF_Iori;
@@ -17,7 +18,7 @@ private:
 	Image* backBuffer;
 	Image* backGround;
 	Image* GameStartImg;
-	KOF_Iori* iori;
+	Character* player1;
 
 public:
 	void PreInit();

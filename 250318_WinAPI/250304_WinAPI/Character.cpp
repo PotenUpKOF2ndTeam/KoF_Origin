@@ -3,18 +3,17 @@
 
 void Character::Init(PLAYER playerType)
 {
-	weakDamage = 10;
-	strongDamage = 15;
+	weakDamage = 5;
+	strongDamage = 10;
 	HP = 100;
 	damage = 0;
 	pos = { 0,0 };
-	moveSpeed = 5;
+	moveSpeed = 1;
 	frame = 0;
 	currAnimationFrame = 0;
 	elapsedFrame = 0;
 	maxAnimationFrame = 0;
 
-	maxIdleFrame = 0;
 	maxWalkFrame = 0;
 	maxWeakPunchFrame = 0;
 	maxStrongPunchFrame = 0;
@@ -49,7 +48,7 @@ void Character::Release()
 
 }
 
-void Character::Update(HDC hdc, int frame)
+void Character::Update()
 {
 	if (isWeakPunch)
 		return AttackWeakPunch();
@@ -78,9 +77,7 @@ void Character::Update(HDC hdc, int frame)
 	{
 		isMoveLeft = true;
 		Move();
-		
-		
-
+	
 	}
 	else {
 		isMoveLeft = false;
@@ -123,33 +120,33 @@ void Character::Update(HDC hdc, int frame)
 void Character::Render(HDC hdc)
 {	
 	currAnimationFrame++;
-
+	
 	if (isMoveLeft || isMoveRight)
 	{
 		image->Render(hdc, pos.x, pos.y, 1, currAnimationFrame, false);
-		if (currAnimationFrame == maxWalkFrame)
+		if (currAnimationFrame >= maxWalkFrame)
 			currAnimationFrame = 0;
 		
 	}
 	else if (isWeakPunch)
 	{
 		image->Render(hdc, pos.x, pos.y, 2, currAnimationFrame, false);
-		if (currAnimationFrame == maxWeakPunchFrame)
+		if (currAnimationFrame >= maxWeakPunchFrame)
 		{
 			isWeakPunch = false;
 			isAttack = false;
-			damage = 0;
+			weakDamage = 0;
 			currAnimationFrame = 0;
 		}
 	}
 	else if (isWeakKick)
 	{
 		image->Render(hdc, pos.x, pos.y, 4, currAnimationFrame, false);
-		if (currAnimationFrame == maxWeakKickFrame)
+		if (currAnimationFrame >= maxWeakKickFrame)
 		{
 			isWeakKick = false;
 			isAttack = false;
-			damage = 0;
+			weakDamage = 0;
 			currAnimationFrame = 0;
 		}
 			
@@ -157,29 +154,29 @@ void Character::Render(HDC hdc)
 	else if (isStrongPunch)
 	{
 		image->Render(hdc, pos.x, pos.y, 3, currAnimationFrame, false);
-		if (currAnimationFrame == maxStrongPunchFrame)
+		if (currAnimationFrame >= maxStrongPunchFrame)
 		{
 			isStrongPunch = false;
 			isAttack = false;
-			damage = 0;
+			strongDamage = 0;
 			currAnimationFrame = 0;
 		}
 	}
 	else if (isStrongKick)
 	{
 		image->Render(hdc, pos.x, pos.y, 5, currAnimationFrame, false);
-		if (currAnimationFrame == maxStrongKickFrame)
+		if (currAnimationFrame >= maxStrongKickFrame)
 		{
 			isStrongKick = false;
 			isAttack = false;
-			damage = 0;
+			strongDamage = 0;
 			currAnimationFrame = 0;
 		}
 	}
 	else
 	{
 		image->Render(hdc, pos.x, pos.y, 0, currAnimationFrame, false);
-		if (currAnimationFrame == maxAnimationFrame)
+		if (currAnimationFrame >= maxAnimationFrame)
 			currAnimationFrame = 0;
 	}
 
@@ -236,12 +233,12 @@ void Character::AttackWeakPunch()
 	if (currAnimationFrame >= 3 && currAnimationFrame < 5)
 	{
 		isAttack = true;
-		damage = 4;
+		weakDamage = 5;
 	}
 	else
 	{
 		isAttack = false;
-		damage = 0;
+		weakDamage = 0;
 	}
 }
 
@@ -250,12 +247,12 @@ void Character::AttackStrongPunch()
 	if (currAnimationFrame >= 4 && currAnimationFrame <= 6)
 	{
 		isAttack = true;
-		damage = 4;
+		strongDamage = 10;
 	}
 	else
 	{
 		isAttack = false;
-		damage = 0;
+		strongDamage = 0;
 	}
 }
 
@@ -264,12 +261,12 @@ void Character::AttackWeakKick()
 	if (currAnimationFrame == 3)
 	{
 		isAttack = true;
-		damage = 4;
+		weakDamage = 5;
 	}
 	else
 	{
 		isAttack = false;
-		damage = 0;
+		weakDamage = 0;
 	}
 }
 
@@ -278,12 +275,12 @@ void Character::AttackStrongKick()
 	if (currAnimationFrame >= 6 && currAnimationFrame <= 9)
 	{
 		isAttack = true;
-		damage = 4;
+		strongDamage = 10;
 	}
 	else
 	{
 		isAttack = false;
-		damage = 0;
+		strongDamage = 0;
 	}
 }
 

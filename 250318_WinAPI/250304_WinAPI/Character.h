@@ -2,13 +2,6 @@
 #include "GameObject.h"
 #include "InputManager.h"
 
-enum class PLAYER : uint8_t
-{
-	Player1,
-	Player2,
-	END
-};
-
 class Image;
 class Character
 {
@@ -51,7 +44,7 @@ private:
 public:
 	void Init(PLAYER playerType);
 	void Release();
-	void Update(HDC hdc, int frame);
+	void Update();
 	void Render(HDC hdc);
 	void Move();
 	void OnDamaged(int damage);
@@ -77,8 +70,6 @@ public:
 	int SetMaxAnimationFrame(int maxAnimationFrame) { this->maxAnimationFrame = maxAnimationFrame; }
 
 	void SetUpdateHP();
-
-
 
 	Character();
 	~Character();
