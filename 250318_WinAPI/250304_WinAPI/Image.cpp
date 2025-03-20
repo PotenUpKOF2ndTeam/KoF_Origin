@@ -85,9 +85,9 @@ HRESULT Image::Init(const wchar_t* filePath, int width, int height, int maxFrame
     imageInfo->loadType = IMAGE_LOAD_TYPE::File;
 
     imageInfo->maxFrameX = maxFrameX;
-    imageInfo->maxFrameY = maxFrameY;
-    imageInfo->frameWidth = width / maxFrameX;
-    imageInfo->frameHeight = height / maxFrameY;
+    imageInfo->maxFrameY = 6;
+    imageInfo->frameWidth = 200;
+    imageInfo->frameHeight = 200;
     imageInfo->currFrameX = imageInfo->currFrameY = 0;
 
     imageInfo->hTempDC = CreateCompatibleDC(hdc);
@@ -134,9 +134,10 @@ void Image::Render(HDC hdc, int destX, int destY)
     }
 }
 
-void Image::Render(HDC hdc, int destX, int destY, int frameIndex, bool isFlip)
+void Image::Render(HDC hdc, int destX, int destY, int currFrameY, int frameIndex, bool isFlip)
 {
     imageInfo->currFrameX = frameIndex;
+    imageInfo->currFrameY = currFrameY;
 
     if (isFlip && isTransparent)
     {
