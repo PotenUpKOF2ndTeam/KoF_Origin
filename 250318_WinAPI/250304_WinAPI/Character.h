@@ -25,10 +25,14 @@ private:
 	int frame;
 	int currAnimationFrame;
 	int elapsedFrame;
-	int maxAnimationFrame;
-
-	int maxAttackAnimationFrame;
-
+	
+	int maxAnimationFrame;		
+	int maxWalkFrame;
+	int maxWeakPunchFrame;
+	int maxStrongPunchFrame;
+	int maxWeakKickFrame;
+	int maxStrongKickFrame;
+	
 	bool isIdle;
 	bool isMoveRight;
 	bool isMoveLeft;
@@ -41,14 +45,8 @@ private:
 	bool isDead;
 
 	PLAYER player;
-
-	Image* moveImage;
-	Image* idleImage;
-	Image* weakPunchImage;
-	Image* weakKickImage;
-	Image* strongPunchImage;
-	Image* strongKickImage;
-	Image image;
+	
+	Image* image;
 
 public:
 	void Init(PLAYER playerType);
@@ -59,6 +57,10 @@ public:
 	void OnDamaged(int damage);
 	void Dead();
 	void Attack();
+	void AttackWeakPunch();
+	void AttackStrongPunch();
+	void AttackWeakKick();
+	void AttackStrongKick();
 
 	void Punch();
 	POINT GetPos() { return pos; }
@@ -69,7 +71,8 @@ public:
 	bool GetIsStrongKick() { return isStrongKick; }
 	bool GetIsWeakKick() { return isWeakKick; }
 	int GetHP() { return HP; }
-	void SetImage(const wchar_t* filePath, int width, int height, int maxAnimationFrame);
+	void SetImage(const wchar_t* filePath, int width, int height, int maxAnimationFrame, int maxWalkFrame, int maxWeakPunchFrame, 
+		int maxStrongPunchFrame, int maxWeakKickFrame, int maxStrongKickFrame);
 	
 	int SetMaxAnimationFrame(int maxAnimationFrame) { this->maxAnimationFrame = maxAnimationFrame; }
 
