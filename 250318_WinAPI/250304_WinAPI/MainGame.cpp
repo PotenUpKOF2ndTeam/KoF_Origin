@@ -1,7 +1,7 @@
 #include "MainGame.h"
 #include "CommonFunction.h"
 #include "Image.h"
-#include "KOF_Iori.h"
+#include "Character.h"
 
 /*
 	실습1. 이오리 집에 보내기
@@ -23,17 +23,27 @@ void MainGame::Init()
 			TEXT("Image/backGround.bmp 생성 실패"), TEXT("경고"), MB_OK);
 	}
 
-	iori = new KOF_Iori();
-	iori->Init();
+	player1 = new Character();
+	player1->Init(Character::PLAYER::Player1);
+
+	player2 = new Character();
+	player2->Init(Character::PLAYER::Player2);
 }
 
 void MainGame::Release()
 {
-	if (iori)
+	if (player1)
 	{
-		iori->Release();
-		delete iori;
-		iori = nullptr;
+		player1->Release();
+		delete player1;
+		player1 = nullptr;
+	}
+
+	if (player2)
+	{
+		player2->Release();
+		delete player2;
+		player2 = nullptr;
 	}
 
 	if (backGround)
@@ -53,8 +63,11 @@ void MainGame::Release()
 
 void MainGame::Update()
 {
-	if (iori)
-		iori->Update();
+	if (player1)
+		player1->Update(8);
+
+	if (player2)
+		player2->Update(8);
 
 	InvalidateRect(g_hWnd, NULL, false);
 }
@@ -65,7 +78,8 @@ void MainGame::Render(HDC hdc)
 	HDC hBackBufferDC = backBuffer->GetMemDC();
 
 	backGround->Render(hBackBufferDC);
-	iori->Render(hBackBufferDC);
+	player1->Render(hBackBufferDC);
+	player2->Render(hBackBufferDC);
 
 	wsprintf(szText, TEXT("Mouse X : %d, Y : %d"), mousePosX, mousePosY);
 	TextOut(hBackBufferDC, 20, 60, szText, wcslen(szText));

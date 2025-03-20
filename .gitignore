@@ -31,5 +31,11 @@
 *.out
 *.app
 /.vs
+<<<<<<< HEAD
+/250318_WinAPI/.vs/250304_WinAPI
+/250318_WinAPI/x64/Debug
+=======
 /250318_WinAPI/x64/Debug
 /250318_WinAPI/.vs/250304_WinAPI
+>>>>>>> origin/main
+/250318_WinAPI/250304_WinAPI/250304_WinAPI.vcxproj
