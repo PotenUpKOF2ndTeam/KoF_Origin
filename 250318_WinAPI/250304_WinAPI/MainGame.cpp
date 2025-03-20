@@ -8,19 +8,37 @@
 	실습2. 배경 바꾸기 (킹오파 애니메이션 배경)
 */
 
-void MainGame::Init()
+void MainGame::PreInit()
 {
 	backBuffer = new Image();
 	if (FAILED(backBuffer->Init(WINSIZE_X, WINSIZE_Y)))
 	{
-		MessageBox(g_hWnd, 
+		MessageBox(g_hWnd,
 			TEXT("백버퍼 생성 실패"), TEXT("경고"), MB_OK);
 	}
+
 	backGround = new Image();
-	if (FAILED(backGround->Init(TEXT("Image/BackGround.bmp"), WINSIZE_X, WINSIZE_Y)))
+	if (FAILED(backGround->Init(TEXT("Image/background.bmp"), WINSIZE_X, WINSIZE_Y)))
 	{
 		MessageBox(g_hWnd,
 			TEXT("Image/backGround.bmp 생성 실패"), TEXT("경고"), MB_OK);
+	}
+
+	GameStartImg = new Image();
+	if (FAILED(GameStartImg->Init(TEXT("Image/pressstart.bmp"), WINSIZE_X - 100, WINSIZE_Y - 100)))
+	{
+		MessageBox(g_hWnd,
+			TEXT("Image/pressstart.bmp 생성 실패"), TEXT("경고"), MB_OK);
+	}
+}
+
+void MainGame::Init()
+{
+	if (GameStartImg)
+	{
+		GameStartImg->Release();
+		delete GameStartImg;
+		GameStartImg = nullptr;
 	}
 
 	iori = new KOF_Iori();
@@ -64,11 +82,14 @@ void MainGame::Render(HDC hdc)
 	// 백버퍼에 먼저 복사
 	HDC hBackBufferDC = backBuffer->GetMemDC();
 
-	backGround->Render(hBackBufferDC);
-	iori->Render(hBackBufferDC);
-
-	wsprintf(szText, TEXT("Mouse X : %d, Y : %d"), mousePosX, mousePosY);
-	TextOut(hBackBufferDC, 20, 60, szText, wcslen(szText));
+	if (backGround) backGround->Render(hBackBufferDC);
+	if (GameStartImg)
+	{
+		GameStartImg->Render(hBackBufferDC, 50, 20);
+		wsprintf(szText, TEXT("Press Enter to Start the Game"));
+		TextOut(hBackBufferDC, WINSIZE_X * (2.0f / 5.0f), WINSIZE_Y - 70, szText, wcslen(szText));
+	}
+	if (iori) iori->Render(hBackBufferDC);
 
 	// 백버퍼에 있는 내용을 메인 hdc에 복사
 	backBuffer->Render(hdc);
@@ -90,6 +111,8 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		KeyManager::GetInstance()->SetKeyUp(wParam, true);
 		break;
 	case WM_KEYDOWN:
+		if (wParam == VK_RETURN && gameStarted == false)
+			Init();
 		KeyManager::GetInstance()->SetKeyDown(wParam, true);
 		KeyManager::GetInstance()->SetKeyUp(wParam, false);
 		break;
