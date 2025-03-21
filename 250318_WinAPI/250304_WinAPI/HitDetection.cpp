@@ -111,25 +111,25 @@ void HitDetection::OnDamage()
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player2->OnDamaged(player1->GetWeakDamage());
+			player2->OnDamaged(player1->GetDamage());
 	}
 	if (IsAttackP1StrongPunch && checkCollision && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player2->OnDamaged(player1->GetStrongDamage());
+			player2->OnDamaged(player1->GetDamage());
 	}
 	if (IsAttackP1WeakKick && checkCollision && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player2->OnDamaged(player1->GetWeakDamage());
+			player2->OnDamaged(player1->GetDamage());
 	}
 	if (IsAttackP1StrongKick && checkCollision && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player2->OnDamaged(player1->GetStrongDamage());
+			player2->OnDamaged(player1->GetDamage());
 	}
 
 	// 2p АјАн
@@ -137,25 +137,25 @@ void HitDetection::OnDamage()
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player1->OnDamaged(player2->GetWeakDamage());
+			player1->OnDamaged(player2->GetDamage());
 	}
 	if (IsAttackP2StrongPunch && checkCollision && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player1->OnDamaged(player2->GetStrongDamage());
+			player1->OnDamaged(player2->GetDamage());
 	}
 	if (IsAttackP2WeakKick && checkCollision && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player1->OnDamaged(player2->GetWeakDamage());
+			player1->OnDamaged(player2->GetDamage());
 	}
 	if (IsAttackP2StrongKick && checkCollision && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player1->OnDamaged(player2->GetStrongDamage());
+			player1->OnDamaged(player2->GetDamage());
 	}
 }
 

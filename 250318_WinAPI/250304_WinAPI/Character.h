@@ -12,9 +12,7 @@ class Character
 public:
 
 
-private:
-	int weakDamage;
-	int	strongDamage;
+private:	
 	int	HP;
 	int damage;
 	POINT pos;
@@ -56,17 +54,14 @@ public:
 	void AttackWeakKick();
 	void AttackStrongKick();
 
-	POINT GetPos() { return pos; }
-	int GetWeakDamage() { return weakDamage; }
-	int GetStrongDamage() { return strongDamage; }
-	bool GetIsStrongPunch() { return isStrongPunch; }
-	bool GetIsWeakPunch() { return isWeakPunch; }
-	bool GetIsStrongKick() { return isStrongKick; }
-	bool GetIsWeakKick() { return isWeakKick; }
+	POINT GetPos() { return pos; }	
 	int GetHP() { return HP; }
+	bool GetIsAttack() { return isAttack; }
+	int GetDamage() { return damage; }
+
 	void SetImage(const wchar_t* filePath, int width, int height, int maxAnimationFrame, int maxWalkFrame, int maxWeakPunchFrame, 
-					int maxStrongPunchFrame, int maxWeakKickFrame, int maxStrongKickFrame);	
-	void SetUpdateHP();
+					int maxStrongPunchFrame, int maxWeakKickFrame, int maxStrongKickFrame);		
+	
 
 	Character();
 	~Character();
