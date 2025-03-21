@@ -3,8 +3,6 @@
 
 void Character::Init(PLAYER playerType)
 {
-	weakDamage = 5;
-	strongDamage = 10;
 	HP = 100;
 	damage = 0;
 	pos = { 0,0 };
@@ -180,19 +178,19 @@ void Character::AttackWeakPunch()
 	if (currAnimationFrame >= 3 && currAnimationFrame < 5)
 	{
 		isAttack = true;
-		weakDamage = 5;
+		damage = 5;
 	}
 	else
 	{
 		isAttack = false;
-		weakDamage = 0;
+		damage = 0;
 	}
 
 	if (currAnimationFrame >= maxWeakPunchFrame)
 	{
 		isWeakPunch = false;
 		isAttack = false;
-		weakDamage = 0;
+		damage = 0;
 		currAnimationFrame = 0;
 	}
 }
@@ -202,19 +200,19 @@ void Character::AttackStrongPunch()
 	if (currAnimationFrame >= 4 && currAnimationFrame <= 6)
 	{
 		isAttack = true;
-		strongDamage = 10;
+		damage = 10;
 	}
 	else
 	{
 		isAttack = false;
-		strongDamage = 0;
+		damage = 0;
 	}
 
 	if (currAnimationFrame >= maxStrongPunchFrame)
 	{
 		isStrongPunch = false;
 		isAttack = false;
-		strongDamage = 0;
+		damage = 0;
 		currAnimationFrame = 0;
 	}
 }
@@ -224,19 +222,19 @@ void Character::AttackWeakKick()
 	if (currAnimationFrame == 3)
 	{
 		isAttack = true;
-		weakDamage = 5;
+		damage = 5;
 	}
 	else
 	{
 		isAttack = false;
-		weakDamage = 0;
+		damage = 0;
 	}
 
 	if (currAnimationFrame >= maxWeakKickFrame)
 	{
 		isWeakKick = false;
 		isAttack = false;
-		weakDamage = 0;
+		damage = 0;
 		currAnimationFrame = 0;
 	}
 }
@@ -246,18 +244,18 @@ void Character::AttackStrongKick()
 	if (currAnimationFrame >= 6 && currAnimationFrame <= 9)
 	{
 		isAttack = true;
-		strongDamage = 10;
+		damage = 10;
 	}
 	else
 	{
 		isAttack = false;
-		strongDamage = 0;
+		damage = 0;
 	}
 	if (currAnimationFrame >= maxStrongKickFrame)
 	{
 		isStrongKick = false;
 		isAttack = false;
-		strongDamage = 0;
+		damage = 0;
 		currAnimationFrame = 0;
 	}
 }
