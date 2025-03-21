@@ -87,25 +87,25 @@ void Character::Update()
 		isMoveLeft = false;
 	}
 		
-	if (InputManager::IsPlayerAttackWeakPunch(player))
+	if (InputManager::IsPlayerAttackWeakPunch(player) && !isMoveLeft && !isMoveRight)
 	{
 		isWeakPunch = true;		
 		currAnimationFrame = 0;
 	}
 	
-	if (InputManager::IsPlayerAttackWeakKick(player))
+	if (InputManager::IsPlayerAttackWeakKick(player) && !isMoveLeft && !isMoveRight)
 	{
 		isWeakKick = true;		
 		currAnimationFrame = 0;
 	}
 	
-	if (InputManager::IsPlayerAttackStrongPunch(player))
+	if (InputManager::IsPlayerAttackStrongPunch(player) && !isMoveLeft && !isMoveRight)
 	{
 		isStrongPunch = true;	
 		currAnimationFrame = 0;
 	}
 	
-	if (InputManager::IsPlayerAttackStrongKick(player))
+	if (InputManager::IsPlayerAttackStrongKick(player) && !isMoveLeft && !isMoveRight)
 	{
 		isStrongKick = true;
 		currAnimationFrame = 0;
@@ -114,13 +114,11 @@ void Character::Update()
 }
 
 void Character::Render(HDC hdc)
-{	
-	
+{		
 	if (isMoveLeft || isMoveRight)
 	{
 		currAnimationFrame %= maxWalkFrame;
-		image->Render(hdc, pos.x, pos.y, 1, currAnimationFrame, isFilp);
-				
+		image->Render(hdc, pos.x, pos.y, 1, currAnimationFrame, isFilp);				
 	}
 	else if (isWeakPunch)
 	{

@@ -48,7 +48,7 @@ void MainGame::Init()
 
 	player2 = new Character();
 	player2->Init(PLAYER::Player2);
-	player2->SetImage(TEXT("Image/Clark_3800x1200_200x200.bmp"), 3800, 1200, 18, 7, 5, 8, 4, 16);
+	player2->SetImage(TEXT("Image/Mai_2400x1200_200x200.bmp"), 2400, 1200, 12, 6, 4, 5, 6, 6);
 }
 
 void MainGame::Release()
