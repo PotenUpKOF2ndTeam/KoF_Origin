@@ -2,10 +2,11 @@
 #include "CommonFunction.h"
 #include "Image.h"
 #include "KOF_Iori.h"
+#include "HitDetection.h"
 
 /*
-	½Ç½À1. ÀÌ¿À¸® Áý¿¡ º¸³»±â
-	½Ç½À2. ¹è°æ ¹Ù²Ù±â (Å·¿ÀÆÄ ¾Ö´Ï¸ÞÀÌ¼Ç ¹è°æ)
+	ì‹¤ìŠµ1. ì´ì˜¤ë¦¬ ì§‘ì— ë³´ë‚´ê¸°
+	ì‹¤ìŠµ2. ë°°ê²½ ë°”ê¾¸ê¸° (í‚¹ì˜¤íŒŒ ì• ë‹ˆë©”ì´ì…˜ ë°°ê²½)
 */
 
 void MainGame::PreInit()
@@ -14,22 +15,27 @@ void MainGame::PreInit()
 	if (FAILED(backBuffer->Init(WINSIZE_X, WINSIZE_Y)))
 	{
 		MessageBox(g_hWnd,
-			TEXT("¹é¹öÆÛ »ý¼º ½ÇÆÐ"), TEXT("°æ°í"), MB_OK);
+			TEXT("ë°±ë²„í¼ ìƒì„± ì‹¤íŒ¨"), TEXT("ê²½ê³ "), MB_OK);
 	}
 
 	backGround = new Image();
 	if (FAILED(backGround->Init(TEXT("Image/background.bmp"), WINSIZE_X, WINSIZE_Y)))
 	{
 		MessageBox(g_hWnd,
-			TEXT("Image/backGround.bmp »ý¼º ½ÇÆÐ"), TEXT("°æ°í"), MB_OK);
+			TEXT("Image/backGround.bmp ìƒì„± ì‹¤íŒ¨"), TEXT("ê²½ê³ "), MB_OK);
 	}
 
 	GameStartImg = new Image();
 	if (FAILED(GameStartImg->Init(TEXT("Image/pressstart.bmp"), WINSIZE_X - 100, WINSIZE_Y - 100)))
 	{
 		MessageBox(g_hWnd,
-			TEXT("Image/pressstart.bmp »ý¼º ½ÇÆÐ"), TEXT("°æ°í"), MB_OK);
+			TEXT("Image/pressstart.bmp ìƒì„± ì‹¤íŒ¨"), TEXT("ê²½ê³ "), MB_OK);
 	}
+
+	replication = new HitDetection();
+
+	replication->Init();
+
 }
 
 void MainGame::Init()
@@ -48,7 +54,8 @@ void MainGame::Init()
 
 	player2 = new Character();
 	player2->Init(PLAYER::Player2);
-	player2->SetImage(TEXT("Image/Mai_2400x1200_200x200.bmp"), 2400, 1200, 12, 6, 4, 5, 6, 6);
+  player2->SetImage(TEXT("Image/Mai_2400x1200_200x200.bmp"), 2400, 1200, 12, 6, 4, 5, 6, 6);
+  replication->Replication(player1, player2);
 }
 
 void MainGame::Release()
@@ -80,6 +87,13 @@ void MainGame::Release()
 		delete backBuffer;
 		backBuffer = nullptr;
 	}
+
+	if (replication)
+	{
+		replication->Release();
+		delete replication;
+		replication = nullptr;
+	}
 }
 
 void MainGame::Update()
@@ -90,12 +104,16 @@ void MainGame::Update()
 	if (player2)
 		player2->Update();
 
+	if (replication) {
+		replication->Update();
+	}
+
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
 void MainGame::Render(HDC hdc)
 {
-	// ¹é¹öÆÛ¿¡ ¸ÕÀú º¹»ç
+	// ë°±ë²„í¼ì— ë¨¼ì € ë³µì‚¬
 	HDC hBackBufferDC = backBuffer->GetMemDC();
 
 	if (backGround) backGround->Render(hBackBufferDC);
@@ -107,8 +125,12 @@ void MainGame::Render(HDC hdc)
 	}
 	if (player1) player1->Render(hBackBufferDC);
 	if (player2) player2->Render(hBackBufferDC);
-	// ¹é¹öÆÛ¿¡ ÀÖ´Â ³»¿ëÀ» ¸ÞÀÎ hdc¿¡ º¹»ç
+	// ë°±ë²„í¼ì— ìžˆëŠ” ë‚´ìš©ì„ ë©”ì¸ hdcì— ë³µì‚¬
 	backBuffer->Render(hdc);
+
+	replication->RePlayer1Render(hdc);
+	replication->RePlayer2Render(hdc);
+	replication->Attack(hdc);
 }
 
 LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
