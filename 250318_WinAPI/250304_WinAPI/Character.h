@@ -58,6 +58,7 @@ public:
 	int GetHP() { return HP; }
 	bool GetIsAttack() { return isAttack; }
 	int GetDamage() { return damage; }
+	PLAYER Getplayer() const { return player; }
 
 	void SetImage(const wchar_t* filePath, int width, int height, int maxAnimationFrame, int maxWalkFrame, int maxWeakPunchFrame, 
 					int maxStrongPunchFrame, int maxWeakKickFrame, int maxStrongKickFrame);		
