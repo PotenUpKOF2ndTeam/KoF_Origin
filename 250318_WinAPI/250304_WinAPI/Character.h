@@ -19,7 +19,6 @@ private:
 	int damage;
 	POINT pos;
 	int	moveSpeed;
-	int frame;
 	int currAnimationFrame;
 	
 	int maxAnimationFrame;		
@@ -52,7 +51,6 @@ public:
 	void Move();
 	void OnDamaged(int damage);
 	void Dead();
-	void Attack();
 	void AttackWeakPunch();
 	void AttackStrongPunch();
 	void AttackWeakKick();
