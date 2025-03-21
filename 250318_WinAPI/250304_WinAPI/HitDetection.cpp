@@ -8,7 +8,7 @@ void HitDetection::Init()
 	player1 = new Character;
 	player2 = new Character;
 
-	checkCollision = false;
+	checkCollision1 = false;
 	checkPosition = true;
 	count = 0;
 
@@ -87,18 +87,33 @@ void HitDetection::Update()
 
 
 
-	/*if (InputManager::IsPlayer1AttackWeakPunch()) {
+	if (InputManager::IsPlayerAttackWeakPunch(player1->GetPlayer())) {
 		IsAttackP1WeakPunch = !IsAttackP1WeakPunch;
 	}
-	if (InputManager::IsPlayer1AttackStrongPunch()) {
+	if (InputManager::IsPlayerAttackStrongPunch(player1->GetPlayer())) {
 		IsAttackP1StrongPunch = !IsAttackP1StrongPunch;
 	}
-	if (InputManager::IsPlayer1AttackWeakKick()) {
+	if (InputManager::IsPlayerAttackWeakKick(player1->GetPlayer())) {
 		IsAttackP1WeakKick = !IsAttackP1WeakKick;
 	}
-	if (InputManager::IsPlayer1AttackStrongKick()) {
+	if (InputManager::IsPlayerAttackStrongKick(player1->GetPlayer())) {
 		IsAttackP1StrongKick = !IsAttackP1StrongKick;
-	}*/
+	}
+
+	if (InputManager::IsPlayerAttackWeakPunch(player2->GetPlayer())) {
+		IsAttackP2WeakPunch = !IsAttackP2WeakPunch;
+	}
+	if (InputManager::IsPlayerAttackStrongPunch(player2->GetPlayer())) {
+		IsAttackP2StrongPunch = !IsAttackP2StrongPunch;
+	}
+	if (InputManager::IsPlayerAttackWeakKick(player2->GetPlayer())) {
+		IsAttackP2WeakKick = !IsAttackP2WeakKick;
+	}
+	if (InputManager::IsPlayerAttackStrongKick(player2->GetPlayer())) {
+		IsAttackP2StrongKick = !IsAttackP2StrongKick;
+	}
+
+
 	CheckPosition();
 	CheckCollision();
 	OnDamage();
@@ -107,62 +122,62 @@ void HitDetection::Update()
 void HitDetection::OnDamage()
 {
 	// 1p 공격
-	if (IsAttackP1WeakPunch && checkCollision && checkPosition) {
+	if (IsAttackP1WeakPunch && checkCollision1 && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player2->OnDamaged(player1->GetWeakDamage());
+			player2->OnDamaged(player1->GetDamage());
 	}
-	if (IsAttackP1StrongPunch && checkCollision && checkPosition) {
+	if (IsAttackP1StrongPunch && checkCollision1 && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player2->OnDamaged(player1->GetStrongDamage());
+			player2->OnDamaged(player1->GetDamage());
 	}
-	if (IsAttackP1WeakKick && checkCollision && checkPosition) {
+	if (IsAttackP1WeakKick && checkCollision1 && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player2->OnDamaged(player1->GetWeakDamage());
+			player2->OnDamaged(player1->GetDamage());
 	}
-	if (IsAttackP1StrongKick && checkCollision && checkPosition) {
+	if (IsAttackP1StrongKick && checkCollision1 && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player2->OnDamaged(player1->GetStrongDamage());
+			player2->OnDamaged(player1->GetDamage());
 	}
 
 	// 2p 공격
-	if (IsAttackP2WeakPunch && checkCollision && checkPosition) {
+	if (IsAttackP2WeakPunch && checkCollision2 && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player1->OnDamaged(player2->GetWeakDamage());
+			player1->OnDamaged(player2->GetDamage());
 	}
-	if (IsAttackP2StrongPunch && checkCollision && checkPosition) {
+	if (IsAttackP2StrongPunch && checkCollision2 && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player1->OnDamaged(player2->GetStrongDamage());
+			player1->OnDamaged(player2->GetDamage());
 	}
-	if (IsAttackP2WeakKick && checkCollision && checkPosition) {
+	if (IsAttackP2WeakKick && checkCollision2 && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player1->OnDamaged(player2->GetWeakDamage());
+			player1->OnDamaged(player2->GetDamage());
 	}
-	if (IsAttackP2StrongKick && checkCollision && checkPosition) {
+	if (IsAttackP2StrongKick && checkCollision2 && checkPosition) {
 		if (RightDefense() || BottomRightDefense())
 			return;
 		else
-			player1->OnDamaged(player2->GetStrongDamage());
+			player1->OnDamaged(player2->GetDamage());
 	}
 }
 
 // 히트 판정 박스 1p
 void HitDetection::RePlayer1Render(HDC hdc)
 {
-	RenderRectAtCenter(hdc, RePlayerPos1.x + 25, RePlayerPos1.y + 50, 50, 100);
+	RenderRectAtCenter(hdc, RePlayerPos1.x + 80, RePlayerPos1.y + 120, 50, 150);
 	//(HDC hdc, int centerX, int centerY, int width, int height)
 
 }
@@ -170,7 +185,7 @@ void HitDetection::RePlayer1Render(HDC hdc)
 // 히트 판정 박스 2p
 void HitDetection::RePlayer2Render(HDC hdc)
 {
-	RenderRectAtCenter(hdc, 225, 50, 50, 100);
+	RenderRectAtCenter(hdc, RePlayerPos2.x + 120, RePlayerPos2.y + 120, 50, 150);
 }
 
 // 1p 2p 위치 비교
@@ -187,35 +202,37 @@ void HitDetection::CheckPosition()
 void HitDetection::Attack(HDC hdc)
 {
 	if (IsAttackP1WeakPunch) {
-		RenderRectAtCenter(hdc, RePlayerPos1.x + 70, RePlayerPos1.y + 20, 10, 10);
-		IsAttackP1WeakPunch = false;
+		RenderRectAtCenter(hdc, RePlayerPos1.x +150, RePlayerPos1.y + 100, 10, 10);
 	}
 	if (IsAttackP1StrongPunch) {
-		RenderRectAtCenter(hdc, RePlayerPos1.x + 70, RePlayerPos1.y + 20, 10, 10);
+		RenderRectAtCenter(hdc, RePlayerPos1.x + 150, RePlayerPos1.y + 100, 10, 10);
 		IsAttackP1StrongPunch = false;
 	}
 	if (IsAttackP1WeakKick) {
-		RenderRectAtCenter(hdc, RePlayerPos1.x + 70, RePlayerPos1.y + 50, 10, 10);
+		RenderRectAtCenter(hdc, RePlayerPos1.x + 150, RePlayerPos1.y + 100, 10, 10);
 		IsAttackP1WeakKick = false;
 	}
 	if (IsAttackP1StrongKick) {
-		RenderRectAtCenter(hdc, RePlayerPos1.x + 70, RePlayerPos1.y + 50, 10, 10);
+		RenderRectAtCenter(hdc, RePlayerPos1.x + 160, RePlayerPos1.y + 120, 10, 10);
 		IsAttackP1StrongKick = false;
 	}
 
 
-	// 플레이어 2 히트 판정 위치 수정 해야합니다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if (IsAttackP2WeakPunch) {
-		RenderRectAtCenter(hdc, RePlayerPos2.x + 70, RePlayerPos2.y + 20, 10, 10);
+		RenderRectAtCenter(hdc, RePlayerPos2.x + 20, RePlayerPos2.y + 100, 10, 10);
+		IsAttackP2WeakPunch = false;
 	}
 	if (IsAttackP2StrongPunch) {
-		RenderRectAtCenter(hdc, RePlayerPos2.x + 70, RePlayerPos2.y + 20, 10, 10);
+		RenderRectAtCenter(hdc, RePlayerPos2.x + 20, RePlayerPos2.y + 100, 10, 10);
+		IsAttackP2StrongPunch = false;
 	}
 	if (IsAttackP2WeakKick) {
-		RenderRectAtCenter(hdc, RePlayerPos2.x + 70, RePlayerPos2.y, 10, 10);
+		RenderRectAtCenter(hdc, RePlayerPos2.x + 20, RePlayerPos2.y + 100, 10, 10);
+		IsAttackP2WeakKick = false;
 	}
 	if (IsAttackP2StrongKick) {
-		RenderRectAtCenter(hdc, RePlayerPos2.x + 70, RePlayerPos2.y, 10, 10);
+		RenderRectAtCenter(hdc, RePlayerPos2.x + 20, RePlayerPos2.y + 120, 10, 10);
+		IsAttackP2StrongKick = false;
 	}
 }
 
@@ -226,7 +243,21 @@ void HitDetection::CheckCollision()
 {
 	RECT intersection;
 	// 두 개의 사각형이 겹치는 교집합 부분이 있는지 체크
-	checkCollision = IntersectRect(&intersection, &ChecekRenderBox1, &ChecekRenderBox2);
+	
+	if (RePlayerPos1.x + 100 >= RePlayerPos2.x && RePlayerPos1.x <= RePlayerPos2.x + 100) {
+		checkCollision1 = true;
+	}
+	else
+		checkCollision1 = false;
+
+	if (RePlayerPos2.x + 100 >= RePlayerPos1.x && RePlayerPos2.x <= RePlayerPos1.x + 100) {
+		checkCollision2 = true;
+	}
+	else
+		checkCollision2 = false;
+
+	/*checkCollision1 = IntersectRect(&intersection, &CheckHitBox1, &ChecekRenderBox2);
+	checkCollision2 = IntersectRect(&intersection, &CheckHitBox2, &ChecekRenderBox2);*/
 }
 
 

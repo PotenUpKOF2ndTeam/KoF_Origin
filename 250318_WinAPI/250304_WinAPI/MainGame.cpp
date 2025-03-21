@@ -2,6 +2,7 @@
 #include "CommonFunction.h"
 #include "Image.h"
 #include "KOF_Iori.h"
+#include "HitDetection.h"
 
 /*
 	실습1. 이오리 집에 보내기
@@ -30,6 +31,11 @@ void MainGame::PreInit()
 		MessageBox(g_hWnd,
 			TEXT("Image/pressstart.bmp 생성 실패"), TEXT("경고"), MB_OK);
 	}
+
+	replication = new HitDetection();
+
+	replication->Init();
+
 }
 
 void MainGame::Init()
@@ -49,6 +55,8 @@ void MainGame::Init()
 	player2 = new Character();
 	player2->Init(PLAYER::Player2);
 	player2->SetImage(TEXT("Image/Clark_3800x1200_200x200.bmp"), 3800, 1200, 18, 7, 5, 8, 4, 16);
+
+	replication->Replication(player1, player2);
 }
 
 void MainGame::Release()
@@ -80,6 +88,13 @@ void MainGame::Release()
 		delete backBuffer;
 		backBuffer = nullptr;
 	}
+
+	if (replication)
+	{
+		replication->Release();
+		delete replication;
+		replication = nullptr;
+	}
 }
 
 void MainGame::Update()
@@ -89,6 +104,10 @@ void MainGame::Update()
 
 	if (player2)
 		player2->Update();
+
+	if (replication) {
+		replication->Update();
+	}
 
 	InvalidateRect(g_hWnd, NULL, false);
 }
@@ -109,6 +128,10 @@ void MainGame::Render(HDC hdc)
 	if (player2) player2->Render(hBackBufferDC);
 	// 백버퍼에 있는 내용을 메인 hdc에 복사
 	backBuffer->Render(hdc);
+
+	replication->RePlayer1Render(hdc);
+	replication->RePlayer2Render(hdc);
+	replication->Attack(hdc);
 }
 
 LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
