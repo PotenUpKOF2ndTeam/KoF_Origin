@@ -135,6 +135,7 @@
     <ClCompile Include="KOF_Iori.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="KOF_Iori.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
