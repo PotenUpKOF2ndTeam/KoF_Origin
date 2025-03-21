@@ -56,6 +56,17 @@ void MainGame::Init()
 	player2->Init(PLAYER::Player2);
   player2->SetImage(TEXT("Image/Mai_2400x1200_200x200.bmp"), 2400, 1200, 12, 6, 4, 5, 6, 6);
   replication->Replication(player1, player2);
+
+  Ui = new UI();
+  Ui->Init();
+
+  player1_HP = 0;
+  player1_Damage = 0;
+
+  player2_HP = 0;
+  player2_Damage = 0;
+
+
 }
 
 void MainGame::Release()
@@ -94,20 +105,50 @@ void MainGame::Release()
 		delete replication;
 		replication = nullptr;
 	}
+
+
+	if (Ui)
+	{
+		Ui->Release();
+		delete Ui;
+		Ui = nullptr;
+	}
 }
 
 void MainGame::Update()
 {
 	if (player1)
+	{
 		player1->Update();
+		player1_HP = player1->GetHP();
+		player1_Damage = player2->GetDamage();
+		player1_isAttak = player1->GetIsAttack();
+	}
 
 	if (player2)
+	{
 		player2->Update();
+		player2_HP = player2->GetHP();
+		player2_Damage = player1->GetDamage();
+		player2_isAttak = player2->GetIsAttack();
+	}
+
+	if (Ui)
+		Ui->Update();
 
 	if (replication) {
 		replication->Update();
 	}
 
+	if (player1_HP <= 0)
+	{
+		player1_HP = 0;
+	}
+
+	if (player2_HP <= 0)
+	{
+		player2_HP = 0;
+	}
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
@@ -125,6 +166,14 @@ void MainGame::Render(HDC hdc)
 	}
 	if (player1) player1->Render(hBackBufferDC);
 	if (player2) player2->Render(hBackBufferDC);
+
+	if (Ui) {
+		Ui->Render(hBackBufferDC);
+		Ui->TimeUI1(hBackBufferDC, WINSIZE_X / 2 - 34, 50);
+		Ui->TimeUI2(hBackBufferDC, WINSIZE_X / 2 + 17, 50);
+		Ui->HPUI_Render(hBackBufferDC, WINSIZE_X - 1040, 30, 300, 50, player1_HP, player1_Damage, player1_isAttak);
+		Ui->HPUI_Render(hBackBufferDC, WINSIZE_X - 340, 30, 300, 50, player2_HP, player2_Damage, player2_isAttak);
+	}
 	// 백버퍼에 있는 내용을 메인 hdc에 복사
 	backBuffer->Render(hdc);
 

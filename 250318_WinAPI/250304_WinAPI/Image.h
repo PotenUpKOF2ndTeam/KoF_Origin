@@ -61,6 +61,7 @@ public:
 	// 빈 비트맵 이미지를 만드는 함수
 	HRESULT Init(int width, int height);
 
+
 	// 파일로부터 이미지를 로드하는 함수
 	HRESULT Init(const wchar_t* filePath, int width, int height, 
 		bool isTransparent = FALSE, COLORREF transColor = FALSE);
@@ -73,6 +74,8 @@ public:
 	// 화면에 출력
 	void Render(HDC hdc, int destX = 0, int destY = 0);
 	void Render(HDC hdc, int destX, int destY, int currFrameY, int frameIndex, bool isFlip = false);
+
+	void backRender(HDC hdc, int destX, int destY, int frameIndex, bool isFlip);
 
 	// 메모리 해제
 	void Release();

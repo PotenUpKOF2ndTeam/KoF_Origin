@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Character.h"
+#include "UI.h"	
 
 class Image;
 class KOF_Iori;
@@ -18,10 +19,20 @@ private:
 	bool gameStarted = false;
 	Image* backBuffer;
 	Image* backGround;
+
 	Image* GameStartImg;
 	Character* player1;
 	Character* player2;
 
+	int player1_HP;
+	int player1_Damage;
+	int player2_HP;
+	int player2_Damage;
+
+	bool player1_isAttak = false;
+	bool player2_isAttak = false;
+
+	UI* Ui;
 
 
 	HitDetection* replication;

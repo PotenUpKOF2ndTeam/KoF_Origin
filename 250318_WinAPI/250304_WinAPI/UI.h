@@ -30,7 +30,7 @@ public:
 	void Update();
 	void Render(HDC hdc);
 	void StartUI();
-	void HPUI_Render(HDC hdc, int x, int y, int width, int height);
+	void HPUI_Render(HDC hdc, int x, int y, int width, int height, int HP, int getDamage, bool isAttak);
 	void TimeUI1(HDC hdc, int x, int y);
 	void TimeUI2(HDC hdc, int x, int y);
 

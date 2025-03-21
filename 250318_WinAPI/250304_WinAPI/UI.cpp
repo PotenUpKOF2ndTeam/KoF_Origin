@@ -1,16 +1,16 @@
 #include "UI.h"
 #include "Image.h"
-//#include "Character.h"
+#include "Character.h"
 
 void UI::Init()
 {
 	pos = { 0.0f, 0.0f };
-	BackGround_Image = new Image();
-	if (FAILED(BackGround_Image->Init(TEXT("Image/KoF_BackGround.bmp"), 1080, 25000, 1, 50,
-		true, RGB(255, 0, 255))))
-	{
-		MessageBox(g_hWnd, TEXT("Image/KoF_BackGround.bmp 파일 로드에 실패"), TEXT("경고"), MB_OK);
-	}
+	//BackGround_Image = new Image();
+	//if (FAILED(BackGround_Image->Init(TEXT("Image/KoF_BackGround.bmp"), 1080, 25000, 1, 50)))
+	//{
+	//	MessageBox(g_hWnd, TEXT("Image/KoF_BackGround.bmp 파일 로드에 실패"), TEXT("경고"), MB_OK);
+	//}
+
 
 	TimeUI1_Image = new Image();
 	if (FAILED(TimeUI1_Image->Init(TEXT("Image/Timeset2.bmp"), 300, 32, 6, 1,
@@ -44,12 +44,12 @@ void UI::Init()
 
 void UI::Release()
 {
-	if (BackGround_Image)
-	{
-		BackGround_Image->Release();
-		delete BackGround_Image;
-		BackGround_Image = nullptr;
-	}
+	//if (BackGround_Image)
+	//{
+	//	BackGround_Image->Release();
+	//	delete BackGround_Image;
+	//	BackGround_Image = nullptr;
+	//}
 	if (TimeUI1_Image)
 	{
 		TimeUI1_Image->Release();
@@ -73,7 +73,7 @@ void UI::Update()
 
 	elapsedFrame++;
 	currAnimaionFrame = elapsedFrame / 9;
-	if (currAnimaionFrame > 8)
+	if (currAnimaionFrame > 51)
 	{
 		currAnimaionFrame = 0;
 		elapsedFrame = 0;
@@ -97,21 +97,6 @@ void UI::Update()
 			timelEapsedFrame1 = 0;
 			roundCount = 2;
 		}
-
-		if (currentHP == 0)
-		{
-			roundCount = 2;
-		}
-	}
-
-	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_NUMPAD2))
-	{
-		if (currentHP > 0) {
-
-			//if (player1.getHP().HP>0)
-			//{	player1.getHP().HP - getWeekDamage().weekDamage}
-			currentHP -= 1;
-		}
 	}
 }
 
@@ -124,8 +109,8 @@ COLORREF GetHPColor(int hp, int maxHP) {
 
 void UI::Render(HDC hdc)
 {
-	//if (BackGround_Image)
-	//   	BackGround_Image->backRender(hdc, pos.x, pos.y, currAnimaionFrame, false);
+	if (BackGround_Image)
+	   	BackGround_Image->backRender(hdc, pos.x, pos.y, currAnimaionFrame, false);
 }
 
 void UI::StartUI()
@@ -134,14 +119,8 @@ void UI::StartUI()
 }
 
 
-void UI::HPUI_Render(HDC hdc, int x, int y, int width, int height)  //int playerhp getHP로 가져와서
+void UI::HPUI_Render(HDC hdc, int x, int y, int width, int height, int HP, int getDamage, bool isAttak)
 {
-
-	// HP 애니메이션 적용 (점진적 감소)
-	if (displayedHP > currentHP) {
-		displayedHP -= 4;
-	}
-
 	// 배경 바 (회색)
 	HBRUSH bgBrush = CreateSolidBrush(RGB(50, 50, 50));
 	RECT bgRect = { x, y, x + width, y + height };
@@ -149,9 +128,9 @@ void UI::HPUI_Render(HDC hdc, int x, int y, int width, int height)  //int player
 	DeleteObject(bgBrush);
 
 	// HP 바 (색상 변화)
-	COLORREF hpColor = GetHPColor(displayedHP, maxHP);
+	COLORREF hpColor = GetHPColor(HP, maxHP);
 	HBRUSH hpBrush = CreateSolidBrush(hpColor);
-	RECT hpRect = { x, y, x + (width * displayedHP / maxHP), y + height };
+	RECT hpRect = { x, y, x + (width * HP / maxHP), y + height };
 	FillRect(hdc, &hpRect, hpBrush);
 	DeleteObject(hpBrush);
 }
