@@ -48,6 +48,9 @@
     <ClCompile Include="Character.cpp">
       <Filter>MainGame\KOF_Character</Filter>
     </ClCompile>
+    <ClCompile Include="HitDetection.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>MainGame\KOF_Character</Filter>
+    </ClInclude>
+    <ClInclude Include="HitDetection.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

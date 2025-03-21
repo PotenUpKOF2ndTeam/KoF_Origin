@@ -56,8 +56,8 @@ void HitDetection::Replication(Character* player1, Character* player2)
 void HitDetection::Update()
 {
 	// 복제된 플레이어 업데이트
-	player1->Update(8);
-	player2->Update(8);
+	player1->Update();
+	player2->Update();
 
 	// 복제 플레이어 좌표 설정
 	RePlayerPos1 = player1->GetPos();
@@ -87,7 +87,7 @@ void HitDetection::Update()
 
 
 
-	if (InputManager::IsPlayer1AttackWeakPunch()) {
+	/*if (InputManager::IsPlayer1AttackWeakPunch()) {
 		IsAttackP1WeakPunch = !IsAttackP1WeakPunch;
 	}
 	if (InputManager::IsPlayer1AttackStrongPunch()) {
@@ -98,7 +98,7 @@ void HitDetection::Update()
 	}
 	if (InputManager::IsPlayer1AttackStrongKick()) {
 		IsAttackP1StrongKick = !IsAttackP1StrongKick;
-	}
+	}*/
 	CheckPosition();
 	CheckCollision();
 	OnDamage();
@@ -235,30 +235,30 @@ void HitDetection::CheckCollision()
 // 방어 처리
 bool HitDetection::LeftDefense()
 {
-	if (InputManager::IsPlayer1MoveLeft/* || InputManager::IsPlayer2MoveLeft*/)
-		return true;
+	//if (InputManager::IsPlayer1MoveLeft/* || InputManager::IsPlayer2MoveLeft*/)
+	//	return true;
 	return false;
 }
 
 bool HitDetection::RightDefense()
 {
-	if (/*InputManager::IsPlayer1MoveRight ||*/ InputManager::IsPlayer2MoveRight)
-		return true;
+	//if (/*InputManager::IsPlayer1MoveRight ||*/ InputManager::IsPlayer2MoveRight)
+	//	return true;
 	return false;
 }
 
 //플레이어가 왼쪽을 누른상태로 아래쪽 버튼도 누르면 참
 bool HitDetection::BottomLeftDefense()
 {
-	if ((InputManager::IsPlayer1MoveLeft && InputManager::IsPlayer1MoveDown)/* || (InputManager::IsPlayer2MoveLeft && InputManager::IsPlayer2MoveDown)*/)
-		return true;
+	//if ((InputManager::IsPlayer1MoveLeft && InputManager::IsPlayer1MoveDown)/* || (InputManager::IsPlayer2MoveLeft && InputManager::IsPlayer2MoveDown)*/)
+	//	return true;
 	return false;
 }
 
 bool HitDetection::BottomRightDefense()
 {
-	if ((InputManager::IsPlayer1MoveRight && InputManager::IsPlayer1MoveDown)/* || (InputManager::IsPlayer2MoveRight && InputManager::IsPlayer2MoveDown)*/)
-		return true;
+	//if ((InputManager::IsPlayer1MoveRight && InputManager::IsPlayer1MoveDown)/* || (InputManager::IsPlayer2MoveRight && InputManager::IsPlayer2MoveDown)*/)
+	//	return true;
 	return false;
 }
 
