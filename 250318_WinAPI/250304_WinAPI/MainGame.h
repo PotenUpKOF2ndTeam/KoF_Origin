@@ -19,6 +19,7 @@ private:
 	Image* backGround;
 	Image* GameStartImg;
 	Character* player1;
+	Character* player2;
 
 public:
 	void PreInit();

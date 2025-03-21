@@ -2,6 +2,10 @@
 #include "GameObject.h"
 #include "InputManager.h"
 
+#define PLAYER1_START_X 200
+#define PLAYER_START_Y 150
+#define PLAYER2_START_X 600
+
 class Image;
 class Character
 {
@@ -17,7 +21,6 @@ private:
 	int	moveSpeed;
 	int frame;
 	int currAnimationFrame;
-	int elapsedFrame;
 	
 	int maxAnimationFrame;		
 	int maxWalkFrame;
@@ -34,8 +37,8 @@ private:
 	bool isWeakKick;
 	bool isStrongKick;
 	bool isAttack;
-	bool isDefend;
 	bool isDead;
+	bool isFilp;
 
 	PLAYER player;
 	
@@ -55,7 +58,6 @@ public:
 	void AttackWeakKick();
 	void AttackStrongKick();
 
-	void Punch();
 	POINT GetPos() { return pos; }
 	int GetWeakDamage() { return weakDamage; }
 	int GetStrongDamage() { return strongDamage; }
@@ -65,10 +67,7 @@ public:
 	bool GetIsWeakKick() { return isWeakKick; }
 	int GetHP() { return HP; }
 	void SetImage(const wchar_t* filePath, int width, int height, int maxAnimationFrame, int maxWalkFrame, int maxWeakPunchFrame, 
-		int maxStrongPunchFrame, int maxWeakKickFrame, int maxStrongKickFrame);
-	
-	int SetMaxAnimationFrame(int maxAnimationFrame) { this->maxAnimationFrame = maxAnimationFrame; }
-
+					int maxStrongPunchFrame, int maxWeakKickFrame, int maxStrongKickFrame);	
 	void SetUpdateHP();
 
 	Character();

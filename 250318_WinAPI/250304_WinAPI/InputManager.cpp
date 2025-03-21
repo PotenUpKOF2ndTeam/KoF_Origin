@@ -1,7 +1,7 @@
 #include "InputManager.h"
 
 const PlayerKeyBind InputManager::player1 = { 'A', 'D', 'W', 'S', 'T', 'Y', 'G', 'H' };
-const PlayerKeyBind InputManager::player2 = { VK_NUMPAD4, VK_NUMPAD6, VK_NUMPAD5, VK_NUMPAD8, '[', ']', ';', '\'' };
+const PlayerKeyBind InputManager::player2 = { VK_NUMPAD4, VK_NUMPAD6, VK_NUMPAD5, VK_NUMPAD8, 'O', 'P', 'K', 'L' };
 
 const PlayerKeyBind &InputManager::WhichPlayer(PLAYER player)
 {
@@ -54,7 +54,8 @@ bool InputManager::IsPlayerAttackWeakPunch(PLAYER player)
 {
     const PlayerKeyBind& character = WhichPlayer(player);
 
-    if (KeyManager::GetInstance()->IsOnceKeyDown(character.WeakPunch))
+    if (KeyManager::GetInstance()->IsOnceKeyDown(character.WeakPunch)
+        || KeyManager::GetInstance()->IsStayKeyDown(character.WeakPunch))
         return true;
     return false;
 }
@@ -63,7 +64,8 @@ bool InputManager::IsPlayerAttackWeakKick(PLAYER player)
 {
     const PlayerKeyBind& character = WhichPlayer(player);
 
-    if (KeyManager::GetInstance()->IsOnceKeyDown(character.WeakKick))
+    if (KeyManager::GetInstance()->IsOnceKeyDown(character.WeakKick)
+        || KeyManager::GetInstance()->IsStayKeyDown(character.WeakKick))
         return true;
     return false;
 }
@@ -72,7 +74,8 @@ bool InputManager::IsPlayerAttackStrongPunch(PLAYER player)
 {
     const PlayerKeyBind& character = WhichPlayer(player);
 
-    if (KeyManager::GetInstance()->IsOnceKeyDown(character.StrongPunch))
+    if (KeyManager::GetInstance()->IsOnceKeyDown(character.StrongPunch)
+        || KeyManager::GetInstance()->IsStayKeyDown(character.StrongPunch))
         return true;
     return false;
 }
@@ -81,7 +84,8 @@ bool InputManager::IsPlayerAttackStrongKick(PLAYER player)
 {
     const PlayerKeyBind& character = WhichPlayer(player);
 
-    if (KeyManager::GetInstance()->IsOnceKeyDown(character.StrongKick))
+    if (KeyManager::GetInstance()->IsOnceKeyDown(character.StrongKick)
+        || KeyManager::GetInstance()->IsStayKeyDown(character.StrongKick))
         return true;
     return false;
 }
