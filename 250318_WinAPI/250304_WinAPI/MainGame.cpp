@@ -41,17 +41,30 @@ void MainGame::Init()
 		GameStartImg = nullptr;
 	}
 
-	iori = new KOF_Iori();
-	iori->Init();
+	player1 = new Character();
+	player1->Init(PLAYER::Player1);
+
+	player1->SetImage(TEXT("Image/Clark_3800x1200_200x200.bmp"), 3800, 1200, 18, 7, 5, 8, 4, 16);
+
+	player2 = new Character();
+	player2->Init(PLAYER::Player2);
+	player2->SetImage(TEXT("Image/Clark_3800x1200_200x200.bmp"), 3800, 1200, 18, 7, 5, 8, 4, 16);
 }
 
 void MainGame::Release()
 {
-	if (iori)
+	if (player1)
 	{
-		iori->Release();
-		delete iori;
-		iori = nullptr;
+		player1->Release();
+		delete player1;
+		player1 = nullptr;
+	}
+
+	if (player2)
+	{
+		player2->Release();
+		delete player2;
+		player2 = nullptr;
 	}
 
 	if (backGround)
@@ -71,8 +84,11 @@ void MainGame::Release()
 
 void MainGame::Update()
 {
-	if (iori)
-		iori->Update();
+	if (player1)
+		player1->Update();
+
+	if (player2)
+		player2->Update();
 
 	InvalidateRect(g_hWnd, NULL, false);
 }
@@ -89,8 +105,8 @@ void MainGame::Render(HDC hdc)
 		wsprintf(szText, TEXT("Press Enter to Start the Game"));
 		TextOut(hBackBufferDC, WINSIZE_X * (2.0f / 5.0f), WINSIZE_Y - 70, szText, wcslen(szText));
 	}
-	if (iori) iori->Render(hBackBufferDC);
-
+	if (player1) player1->Render(hBackBufferDC);
+	if (player2) player2->Render(hBackBufferDC);
 	// 백버퍼에 있는 내용을 메인 hdc에 복사
 	backBuffer->Render(hdc);
 }
@@ -100,7 +116,7 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	switch (iMessage)
 	{
 	case WM_CREATE:
-		hTimer = (HANDLE)SetTimer(hWnd, 0, 10, NULL);
+		hTimer = (HANDLE)SetTimer(hWnd, 0, 50, NULL);
 
 		break;
 	case WM_TIMER:

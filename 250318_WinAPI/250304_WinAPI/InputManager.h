@@ -1,6 +1,12 @@
 #pragma once
 #include "KeyManager.h"
-#include "Character.h"
+
+enum class PLAYER : uint8_t
+{
+	Player1,
+	Player2,
+	END
+};
 
 typedef struct PlayerKeyBind
 {
