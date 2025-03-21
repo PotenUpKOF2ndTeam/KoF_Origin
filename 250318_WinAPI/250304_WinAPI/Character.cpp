@@ -9,7 +9,6 @@ void Character::Init(PLAYER playerType)
 	damage = 0;
 	pos = { 0,0 };
 	moveSpeed = 5;
-	frame = 0;
 	currAnimationFrame = 0;
 	maxAnimationFrame = 0;
 
@@ -70,9 +69,9 @@ void Character::Update()
 		return AttackStrongKick();
 
 	if (InputManager::IsPlayerMoveRight(player))
-	{
+	{	
 		isMoveRight = true;
-		Move();		
+		Move();
 	}
 	else
 	{
@@ -108,7 +107,7 @@ void Character::Update()
 	
 	if (InputManager::IsPlayerAttackStrongKick(player))
 	{
-		isStrongKick = true;		
+		isStrongKick = true;
 		currAnimationFrame = 0;
 	}
 	
@@ -126,29 +125,23 @@ void Character::Render(HDC hdc)
 	else if (isWeakPunch)
 	{
 		image->Render(hdc, pos.x, pos.y, 2, currAnimationFrame, isFilp);
-		
 	}
 	else if (isWeakKick)
 	{
-		image->Render(hdc, pos.x, pos.y, 4, currAnimationFrame, isFilp);
-		
-			
+		image->Render(hdc, pos.x, pos.y, 4, currAnimationFrame, isFilp);					
 	}
 	else if (isStrongPunch)
 	{
-		image->Render(hdc, pos.x, pos.y, 3, currAnimationFrame, isFilp);
-		
+		image->Render(hdc, pos.x, pos.y, 3, currAnimationFrame, isFilp);		
 	}
 	else if (isStrongKick)
 	{
-		image->Render(hdc, pos.x, pos.y, 5, currAnimationFrame, isFilp);
-		
+		image->Render(hdc, pos.x, pos.y, 5, currAnimationFrame, isFilp);		
 	}
 	else
 	{
 		currAnimationFrame %= maxAnimationFrame;
-		image->Render(hdc, pos.x, pos.y, 0, currAnimationFrame, isFilp);
-		
+		image->Render(hdc, pos.x, pos.y, 0, currAnimationFrame, isFilp);		
 	}
 
 	currAnimationFrame++;
@@ -182,20 +175,6 @@ void Character::OnDamaged(int damage)
 void Character::Dead()
 {
 	isDead = true;
-}
-
-void Character::Attack()
-{
-	if (currAnimationFrame >= 3 && currAnimationFrame <= 5)
-	{
-		isAttack = true;
-		damage = 4;
-	}
-	else
-	{
-		isAttack = false;
-		damage = 0;
-	}
 }
 
 void Character::AttackWeakPunch()
