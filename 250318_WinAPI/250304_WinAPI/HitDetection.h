@@ -16,10 +16,6 @@ private:
 	RECT ChecekRenderBox1;
 	RECT ChecekRenderBox2;
 
-	RECT CheckHitBox1;
-	RECT CheckHitBox2;
-
-	POINT pos;
 
 
 	// checkPosition이 true 일 시 1p 공격 false일 시 2p공격

@@ -203,6 +203,7 @@ void HitDetection::Attack(HDC hdc)
 {
 	if (IsAttackP1WeakPunch) {
 		RenderRectAtCenter(hdc, RePlayerPos1.x +150, RePlayerPos1.y + 100, 10, 10);
+		IsAttackP1WeakPunch = false;
 	}
 	if (IsAttackP1StrongPunch) {
 		RenderRectAtCenter(hdc, RePlayerPos1.x + 150, RePlayerPos1.y + 100, 10, 10);
@@ -256,8 +257,6 @@ void HitDetection::CheckCollision()
 	else
 		checkCollision2 = false;
 
-	/*checkCollision1 = IntersectRect(&intersection, &CheckHitBox1, &ChecekRenderBox2);
-	checkCollision2 = IntersectRect(&intersection, &CheckHitBox2, &ChecekRenderBox2);*/
 }
 
 

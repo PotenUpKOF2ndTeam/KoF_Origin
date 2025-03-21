@@ -128,9 +128,6 @@ void MainGame::Render(HDC hdc)
 	// 백버퍼에 있는 내용을 메인 hdc에 복사
 	backBuffer->Render(hdc);
 
-	replication->RePlayer1Render(hdc);
-	replication->RePlayer2Render(hdc);
-	replication->Attack(hdc);
 }
 
 LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
