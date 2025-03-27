@@ -3,7 +3,7 @@
 #include "InputManager.h"
 
 #define PLAYER1_START_X 200
-#define PLAYER_START_Y 150
+#define PLAYER_START_Y 240
 #define PLAYER2_START_X 600
 
 class Image;
