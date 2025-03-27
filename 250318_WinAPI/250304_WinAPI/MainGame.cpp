@@ -4,17 +4,7 @@
 #include "KOF_Iori.h"
 #include "HitDetection.h"
 
-/*
-	실습1. 이오리 집에 보내기
-	실습2. 배경 바꾸기 (킹오파 애니메이션 배경)
-*/
-
 void MainGame::PreInit()
-{
-
-}
-
-void MainGame::Init()
 {
 	backBuffer = new Image();
 	if (FAILED(backBuffer->Init(WINSIZE_X, WINSIZE_Y)))
@@ -22,21 +12,17 @@ void MainGame::Init()
 		MessageBox(g_hWnd,
 			TEXT("백버퍼 생성 실패"), TEXT("경고"), MB_OK);
 	}
+}
 
-	backGround = new Image();
-	if (FAILED(backGround->Init(TEXT("Image/background.bmp"), WINSIZE_X, WINSIZE_Y)))
+void MainGame::Init()
+{
+
+	backBuffer = new Image();
+	if (FAILED(backBuffer->Init(WINSIZE_X, WINSIZE_Y)))
 	{
 		MessageBox(g_hWnd,
-			TEXT("Image/backGround.bmp 생성 실패"), TEXT("경고"), MB_OK);
+			TEXT("백버퍼 생성 실패"), TEXT("경고"), MB_OK);
 	}
-
-	GameStartImg = new Image();
-	if (FAILED(GameStartImg->Init(TEXT("Image/pressstart.bmp"), WINSIZE_X - 100, WINSIZE_Y - 100)))
-	{
-		MessageBox(g_hWnd,
-			TEXT("Image/pressstart.bmp 생성 실패"), TEXT("경고"), MB_OK);
-	}
-
 
 	player1 = new Character();
 	player1->Init(PLAYER::Player1);
@@ -78,13 +64,6 @@ void MainGame::Release()
 		player2 = nullptr;
 	}
 
-	if (backGround)
-	{
-		backGround->Release();
-		delete backGround;
-		backGround = nullptr;
-	}
-
 	if (backBuffer)
 	{
 		backBuffer->Release();
@@ -97,13 +76,6 @@ void MainGame::Release()
 		replication->Release();
 		delete replication;
 		replication = nullptr;
-	}
-
-	if (GameStartImg)
-	{
-		GameStartImg->Release();
-		delete GameStartImg;
-		GameStartImg = nullptr;
 	}
 
 	if (Ui)
@@ -142,11 +114,18 @@ void MainGame::Update()
 	if (player1_HP <= 0)
 	{
 		player1_HP = 0;
+		DestroyWindow(g_hWnd);
 	}
 
 	if (player2_HP <= 0)
 	{
 		player2_HP = 0;
+		DestroyWindow(g_hWnd);
+	}
+
+	if (Ui && Ui->GetRoundCount() == 2)
+	{
+		DestroyWindow(g_hWnd);
 	}
 	InvalidateRect(g_hWnd, NULL, false);
 }
@@ -155,24 +134,19 @@ void MainGame::Render(HDC hdc)
 {
 	// 백버퍼에 먼저 복사
 	HDC hBackBufferDC = backBuffer->GetMemDC();
-	//if (GameStartImg)
-	//{
-	//	GameStartImg->Render(hBackBufferDC, 50, 20);
-	//	wsprintf(szText, TEXT("Press Enter to Start the Game"));
-	//	TextOut(hBackBufferDC, WINSIZE_X * (2.0f / 5.0f), WINSIZE_Y - 70, szText, wcslen(szText));
-	//}
-
-	//if (backGround) backGround->Render(hBackBufferDC);
-	Ui->Render(hBackBufferDC);
 
 	if (Ui) {
+		Ui->Render(hBackBufferDC);
 		Ui->TimeUI1(hBackBufferDC, WINSIZE_X / 2 - 34, 50);
 		Ui->TimeUI2(hBackBufferDC, WINSIZE_X / 2 + 17, 50);
 		Ui->HPUI_Render(hBackBufferDC, WINSIZE_X - 1040, 30, 300, 50, player1_HP, player1_Damage, player1_isAttak);
 		Ui->HPUI_Render(hBackBufferDC, WINSIZE_X - 340, 30, 300, 50, player2_HP, player2_Damage, player2_isAttak);
 	}
-	if (player1) player1->Render(hBackBufferDC);
-	if (player2) player2->Render(hBackBufferDC);
+	if (Ui && Ui->GetRoundCount() == 1)
+	{
+		if (player1) player1->Render(hBackBufferDC);
+		if (player2) player2->Render(hBackBufferDC);
+	}
 	// 백버퍼에 있는 내용을 메인 hdc에 복사
 	backBuffer->Render(hdc);
 
@@ -190,14 +164,8 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		this->Update();
 		break;
 	case WM_KEYUP:
-		//KeyManager::GetInstance()->SetKeyDown(wParam, false);
-		//KeyManager::GetInstance()->SetKeyUp(wParam, true);
 		break;
 	case WM_KEYDOWN:
-		//if (wParam == VK_RETURN && gameStarted == false)
-		//	Init();
-		//KeyManager::GetInstance()->SetKeyDown(wParam, true);
-		//KeyManager::GetInstance()->SetKeyUp(wParam, false);
 		break;
 	case WM_LBUTTONDOWN:
 		mousePosX = LOWORD(lParam);
@@ -225,7 +193,6 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		PostQuitMessage(0);
 		break;
 	}
-
 	return DefWindowProc(hWnd, iMessage, wParam, lParam);
 }
 

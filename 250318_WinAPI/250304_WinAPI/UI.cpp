@@ -34,7 +34,6 @@ void UI::Init()
 
 	displayedHP = 100;
 	maxHP = 100;
-	currentHP = 100;
 
 	roundCount = 0;
 
@@ -69,18 +68,18 @@ void UI::Update()
 		StartUI();
 	}
 
+	elapsedFrame++;
+	currAnimaionFrame = elapsedFrame;
+	if (currAnimaionFrame > 50)
+	{
+		currAnimaionFrame = 0;
+		elapsedFrame = 0;
+	}
+
 	if (roundCount == 1)
 	{
-		elapsedFrame++;
-		currAnimaionFrame = elapsedFrame;
-		if (currAnimaionFrame > 50)
-		{
-			currAnimaionFrame = 0;
-			elapsedFrame = 0;
-		}
-
 		timelEapsedFrame2++;
-		timeFrame2 = timelEapsedFrame2 / 60;
+		timeFrame2 = timelEapsedFrame2 / 30;
 		if (timeFrame2 > 9)
 		{
 			timeFrame2 = 0;
@@ -88,7 +87,7 @@ void UI::Update()
 		}
 
 		timelEapsedFrame1++;
-		timeFrame1 = timelEapsedFrame1 / 600;
+		timeFrame1 = timelEapsedFrame1 / 300;
 		if (timeFrame1 > 5)
 		{
 			timeFrame1 = 0;
