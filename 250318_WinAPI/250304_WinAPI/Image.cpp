@@ -108,6 +108,46 @@ HRESULT Image::Init(const wchar_t* filePath, int width, int height, int maxFrame
     return S_OK;   // S_OK, E_FAIL
 }
 
+HRESULT Image::Init_2(const wchar_t* filePath, int width, int height, int maxFrameX, int maxFrameY, bool isTransparent, COLORREF transColor)
+{
+    HDC hdc = GetDC(g_hWnd);
+
+    imageInfo = new IMAGE_INFO();
+    imageInfo->resID = 0;
+    imageInfo->hMemDC = CreateCompatibleDC(hdc);
+    imageInfo->hBitmap = (HBITMAP)LoadImage(
+        g_hInstance, filePath, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
+    imageInfo->hOldBit = (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);
+
+    imageInfo->width = width;
+    imageInfo->height = height;
+    imageInfo->loadType = IMAGE_LOAD_TYPE::File;
+
+    imageInfo->maxFrameX = maxFrameX;
+    imageInfo->maxFrameY = maxFrameY;
+    imageInfo->frameWidth = width / maxFrameX;
+    imageInfo->frameHeight = height / maxFrameY;
+    imageInfo->currFrameX = imageInfo->currFrameY = 0;
+
+    imageInfo->hTempDC = CreateCompatibleDC(hdc);
+    imageInfo->hTempBit = CreateCompatibleBitmap(hdc, width, height);
+    imageInfo->hOldTemp = (HBITMAP)SelectObject(imageInfo->hTempDC, imageInfo->hTempBit);
+
+    ReleaseDC(g_hWnd, hdc);
+
+    if (imageInfo->hBitmap == NULL)
+    {
+        Release();
+        return E_FAIL;
+    }
+
+    this->isTransparent = isTransparent;
+    this->transColor = transColor;
+
+    return S_OK;   // S_OK, E_FAIL
+}
+
+
 void Image::Render(HDC hdc, int destX, int destY)
 {
     if (isTransparent)
@@ -185,9 +225,9 @@ void Image::Render(HDC hdc, int destX, int destY, int currFrameY, int frameIndex
     }
 }
 
-void Image::backRender(HDC hdc, int destX, int destY, int frameIndex, bool isFlip)
+void Image::Render_set(HDC hdc, int destX, int destY, int frameIndexX, bool isFlip)
 {
-    imageInfo->currFrameY = frameIndex;
+    imageInfo->currFrameX = frameIndexX;
 
     if (isFlip && isTransparent)
     {
@@ -227,9 +267,59 @@ void Image::backRender(HDC hdc, int destX, int destY, int frameIndex, bool isFli
             hdc,
             destX, destY,
             imageInfo->width,
-            imageInfo->height / 9,
+            imageInfo->height/9,
             imageInfo->hMemDC,
-            0, imageInfo->height / 9 * frameIndex,
+            0, imageInfo->width / 9 * frameIndexX,
+            SRCCOPY
+        );
+    }
+}
+
+void Image::backRender(HDC hdc, int destX, int destY, int frameIndexY, bool isFlip)
+{
+    imageInfo->currFrameY = frameIndexY;
+
+    if (isFlip && isTransparent)
+    {
+        StretchBlt(imageInfo->hTempDC, 0, 0,
+            imageInfo->frameWidth, imageInfo->frameHeight,
+            imageInfo->hMemDC,
+            (imageInfo->frameWidth * imageInfo->currFrameX) + (imageInfo->frameWidth - 1),
+            imageInfo->frameHeight * imageInfo->currFrameY,
+            -imageInfo->frameWidth, imageInfo->frameHeight,
+            SRCCOPY
+        );
+
+        GdiTransparentBlt(hdc,
+            destX, destY,
+            imageInfo->frameWidth, imageInfo->frameHeight,
+
+            imageInfo->hTempDC,
+            0, 0,
+            imageInfo->frameWidth, imageInfo->frameHeight,
+            transColor);
+    }
+    else if (isTransparent)
+    {
+        GdiTransparentBlt(hdc,
+            destX, destY,
+            imageInfo->frameWidth, imageInfo->frameHeight,
+
+            imageInfo->hMemDC,
+            imageInfo->frameWidth * imageInfo->currFrameX,
+            imageInfo->frameHeight * imageInfo->currFrameY,
+            imageInfo->frameWidth, imageInfo->frameHeight,
+            transColor);
+    }
+    else
+    {
+        BitBlt(
+            hdc,
+            destX, destY,
+            imageInfo->width,
+            imageInfo->height / 50,
+            imageInfo->hMemDC,
+            0, imageInfo->height / 50 * frameIndexY,
             SRCCOPY
         );
     }

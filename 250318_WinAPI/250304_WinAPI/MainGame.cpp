@@ -11,6 +11,11 @@
 
 void MainGame::PreInit()
 {
+
+}
+
+void MainGame::Init()
+{
 	backBuffer = new Image();
 	if (FAILED(backBuffer->Init(WINSIZE_X, WINSIZE_Y)))
 	{
@@ -32,39 +37,27 @@ void MainGame::PreInit()
 			TEXT("Image/pressstart.bmp 생성 실패"), TEXT("경고"), MB_OK);
 	}
 
-	replication = new HitDetection();
-
-	replication->Init();
-
-}
-
-void MainGame::Init()
-{
-	if (GameStartImg)
-	{
-		GameStartImg->Release();
-		delete GameStartImg;
-		GameStartImg = nullptr;
-	}
 
 	player1 = new Character();
 	player1->Init(PLAYER::Player1);
-
 	player1->SetImage(TEXT("Image/Clark_3800x1200_200x200.bmp"), 3800, 1200, 18, 7, 5, 8, 4, 16);
 
 	player2 = new Character();
 	player2->Init(PLAYER::Player2);
-  player2->SetImage(TEXT("Image/Mai_2400x1200_200x200.bmp"), 2400, 1200, 12, 6, 4, 5, 6, 6);
-  replication->Replication(player1, player2);
+	player2->SetImage(TEXT("Image/Mai_2400x1200_200x200.bmp"), 2400, 1200, 12, 6, 4, 5, 6, 6);
 
-  Ui = new UI();
-  Ui->Init();
+	replication = new HitDetection();
+	replication->Init();
+	replication->Replication(player1, player2);
 
-  player1_HP = 0;
-  player1_Damage = 0;
+	Ui = new UI();
+	Ui->Init();
 
-  player2_HP = 0;
-  player2_Damage = 0;
+	player1_HP = 0;
+	player1_Damage = 0;
+
+	player2_HP = 0;
+	player2_Damage = 0;
 
 
 }
@@ -106,6 +99,12 @@ void MainGame::Release()
 		replication = nullptr;
 	}
 
+	if (GameStartImg)
+	{
+		GameStartImg->Release();
+		delete GameStartImg;
+		GameStartImg = nullptr;
+	}
 
 	if (Ui)
 	{
@@ -156,24 +155,24 @@ void MainGame::Render(HDC hdc)
 {
 	// 백버퍼에 먼저 복사
 	HDC hBackBufferDC = backBuffer->GetMemDC();
+	//if (GameStartImg)
+	//{
+	//	GameStartImg->Render(hBackBufferDC, 50, 20);
+	//	wsprintf(szText, TEXT("Press Enter to Start the Game"));
+	//	TextOut(hBackBufferDC, WINSIZE_X * (2.0f / 5.0f), WINSIZE_Y - 70, szText, wcslen(szText));
+	//}
 
-	if (backGround) backGround->Render(hBackBufferDC);
-	if (GameStartImg)
-	{
-		GameStartImg->Render(hBackBufferDC, 50, 20);
-		wsprintf(szText, TEXT("Press Enter to Start the Game"));
-		TextOut(hBackBufferDC, WINSIZE_X * (2.0f / 5.0f), WINSIZE_Y - 70, szText, wcslen(szText));
-	}
-	if (player1) player1->Render(hBackBufferDC);
-	if (player2) player2->Render(hBackBufferDC);
+	//if (backGround) backGround->Render(hBackBufferDC);
+	Ui->Render(hBackBufferDC);
 
 	if (Ui) {
-		Ui->Render(hBackBufferDC);
 		Ui->TimeUI1(hBackBufferDC, WINSIZE_X / 2 - 34, 50);
 		Ui->TimeUI2(hBackBufferDC, WINSIZE_X / 2 + 17, 50);
 		Ui->HPUI_Render(hBackBufferDC, WINSIZE_X - 1040, 30, 300, 50, player1_HP, player1_Damage, player1_isAttak);
 		Ui->HPUI_Render(hBackBufferDC, WINSIZE_X - 340, 30, 300, 50, player2_HP, player2_Damage, player2_isAttak);
 	}
+	if (player1) player1->Render(hBackBufferDC);
+	if (player2) player2->Render(hBackBufferDC);
 	// 백버퍼에 있는 내용을 메인 hdc에 복사
 	backBuffer->Render(hdc);
 
@@ -191,14 +190,14 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		this->Update();
 		break;
 	case WM_KEYUP:
-		KeyManager::GetInstance()->SetKeyDown(wParam, false);
-		KeyManager::GetInstance()->SetKeyUp(wParam, true);
+		//KeyManager::GetInstance()->SetKeyDown(wParam, false);
+		//KeyManager::GetInstance()->SetKeyUp(wParam, true);
 		break;
 	case WM_KEYDOWN:
-		if (wParam == VK_RETURN && gameStarted == false)
-			Init();
-		KeyManager::GetInstance()->SetKeyDown(wParam, true);
-		KeyManager::GetInstance()->SetKeyUp(wParam, false);
+		//if (wParam == VK_RETURN && gameStarted == false)
+		//	Init();
+		//KeyManager::GetInstance()->SetKeyDown(wParam, true);
+		//KeyManager::GetInstance()->SetKeyUp(wParam, false);
 		break;
 	case WM_LBUTTONDOWN:
 		mousePosX = LOWORD(lParam);

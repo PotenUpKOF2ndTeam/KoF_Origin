@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObject.h"
-#define HP_DEC_AMOUNT 10  // HP °¨¼Ò·®
 
 class Image;
 class UI

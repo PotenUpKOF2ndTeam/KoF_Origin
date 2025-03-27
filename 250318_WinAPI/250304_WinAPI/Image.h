@@ -71,10 +71,14 @@ public:
 		int maxFrameX, int maxFrameY,
 		bool isTransparent = FALSE, COLORREF transColor = FALSE);
 
+	HRESULT Init_2(const wchar_t* filePath, int width, int height,
+		int maxFrameX, int maxFrameY,
+		bool isTransparent = FALSE, COLORREF transColor = FALSE);
+
 	// 화면에 출력
 	void Render(HDC hdc, int destX = 0, int destY = 0);
 	void Render(HDC hdc, int destX, int destY, int currFrameY, int frameIndex, bool isFlip = false);
-
+	void Render_set(HDC hdc, int destX, int destY, int frameIndex, bool isFlip);
 	void backRender(HDC hdc, int destX, int destY, int frameIndex, bool isFlip);
 
 	// 메모리 해제

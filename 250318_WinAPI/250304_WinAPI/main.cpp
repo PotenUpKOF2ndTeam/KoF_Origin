@@ -81,7 +81,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	ShowWindow(g_hWnd, nCmdShow);
 
-	g_mainGame.PreInit();
+	g_mainGame.Init();
 
 	MSG message;
 	while (GetMessage(&message, 0, 0, 0))

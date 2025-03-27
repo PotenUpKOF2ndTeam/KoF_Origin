@@ -5,21 +5,19 @@
 void UI::Init()
 {
 	pos = { 0.0f, 0.0f };
-	//BackGround_Image = new Image();
-	//if (FAILED(BackGround_Image->Init(TEXT("Image/KoF_BackGround.bmp"), 1080, 25000, 1, 50)))
-	//{
-	//	MessageBox(g_hWnd, TEXT("Image/KoF_BackGround.bmp 파일 로드에 실패"), TEXT("경고"), MB_OK);
-	//}
-
-
+	BackGround_Image = new Image();
+	if (FAILED(BackGround_Image->Init_2(TEXT("Image/KoF_BackGround.bmp"), 1080, 25000, 1, 50)))
+	{
+		MessageBox(g_hWnd, TEXT("Image/KoF_BackGround.bmp 파일 로드에 실패"), TEXT("경고"), MB_OK);
+	}
 	TimeUI1_Image = new Image();
-	if (FAILED(TimeUI1_Image->Init(TEXT("Image/Timeset2.bmp"), 300, 32, 6, 1,
+	if (FAILED(TimeUI1_Image->Init_2(TEXT("Image/Timeset2.bmp"), 300, 32, 6, 1,
 		true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, TEXT("Image/Timeset2.bmp파일 로드에 실패"), TEXT("경고"), MB_OK);
 	}
 	TimeUI2_Image = new Image();
-	if (FAILED(TimeUI2_Image->Init(TEXT("Image/Timeset1.bmp"), 510, 32, 10, 1,
+	if (FAILED(TimeUI2_Image->Init_2(TEXT("Image/Timeset1.bmp"), 510, 32, 10, 1,
 		true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, TEXT("Image/Timeset1.bmp파일 로드에 실패"), TEXT("경고"), MB_OK);
@@ -44,12 +42,12 @@ void UI::Init()
 
 void UI::Release()
 {
-	//if (BackGround_Image)
-	//{
-	//	BackGround_Image->Release();
-	//	delete BackGround_Image;
-	//	BackGround_Image = nullptr;
-	//}
+	if (BackGround_Image)
+	{
+		BackGround_Image->Release();
+		delete BackGround_Image;
+		BackGround_Image = nullptr;
+	}
 	if (TimeUI1_Image)
 	{
 		TimeUI1_Image->Release();
@@ -71,16 +69,16 @@ void UI::Update()
 		StartUI();
 	}
 
-	elapsedFrame++;
-	currAnimaionFrame = elapsedFrame / 9;
-	if (currAnimaionFrame > 51)
-	{
-		currAnimaionFrame = 0;
-		elapsedFrame = 0;
-	}
-
 	if (roundCount == 1)
 	{
+		elapsedFrame++;
+		currAnimaionFrame = elapsedFrame;
+		if (currAnimaionFrame > 50)
+		{
+			currAnimaionFrame = 0;
+			elapsedFrame = 0;
+		}
+
 		timelEapsedFrame2++;
 		timeFrame2 = timelEapsedFrame2 / 60;
 		if (timeFrame2 > 9)
@@ -138,13 +136,13 @@ void UI::HPUI_Render(HDC hdc, int x, int y, int width, int height, int HP, int g
 void UI::TimeUI1(HDC hdc, int x, int y)
 {
 	if (TimeUI1_Image)
-		TimeUI1_Image->Render(hdc, x, y, timeFrame1, false);
+		TimeUI1_Image->Render_set(hdc, x, y, timeFrame1, false);
 }
 
 void UI::TimeUI2(HDC hdc, int x, int y)
 {
 	if (TimeUI2_Image)
-		TimeUI2_Image->Render(hdc, x, y, timeFrame2, false);
+		TimeUI2_Image->Render_set(hdc, x, y, timeFrame2, false);
 }
 
 UI::UI()
