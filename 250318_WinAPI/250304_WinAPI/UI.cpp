@@ -5,11 +5,19 @@
 void UI::Init()
 {
 	pos = { 0.0f, 0.0f };
+
+	Start_BackGround_Image = new Image();
+	if (FAILED(Start_BackGround_Image->Init_2(TEXT("Image/BackGround.bmp"), 1080, 25000, 1, 50)))
+	{
+		MessageBox(g_hWnd, TEXT("Image/BackGround.bmp 파일 로드에 실패"), TEXT("경고"), MB_OK);
+	}
+
 	BackGround_Image = new Image();
 	if (FAILED(BackGround_Image->Init_2(TEXT("Image/KoF_BackGround.bmp"), 1080, 25000, 1, 50)))
 	{
 		MessageBox(g_hWnd, TEXT("Image/KoF_BackGround.bmp 파일 로드에 실패"), TEXT("경고"), MB_OK);
 	}
+
 	TimeUI1_Image = new Image();
 	if (FAILED(TimeUI1_Image->Init_2(TEXT("Image/Timeset2.bmp"), 300, 32, 6, 1,
 		true, RGB(0, 0, 0))))
@@ -22,6 +30,9 @@ void UI::Init()
 	{
 		MessageBox(g_hWnd, TEXT("Image/Timeset1.bmp파일 로드에 실패"), TEXT("경고"), MB_OK);
 	}
+
+	startElapsedFrame = 0;
+	startFrame = 0;
 
 	elapsedFrame = 0;
 	currAnimaionFrame = 0;
@@ -41,12 +52,20 @@ void UI::Init()
 
 void UI::Release()
 {
+	if (Start_BackGround_Image)
+	{
+		Start_BackGround_Image->Release();
+		delete Start_BackGround_Image;
+		Start_BackGround_Image = nullptr;
+	}
+
 	if (BackGround_Image)
 	{
 		BackGround_Image->Release();
 		delete BackGround_Image;
 		BackGround_Image = nullptr;
 	}
+
 	if (TimeUI1_Image)
 	{
 		TimeUI1_Image->Release();
@@ -63,21 +82,33 @@ void UI::Release()
 
 void UI::Update()
 {
+	if (roundCount == 0)
+	{
+		startElapsedFrame++;
+		startFrame = startElapsedFrame;
+		if (startFrame > 50)
+		{
+			startFrame = 0;
+			startElapsedFrame = 0;
+		}
+	}
+
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE))
 	{
 		StartUI();
 	}
 
-	elapsedFrame++;
-	currAnimaionFrame = elapsedFrame;
-	if (currAnimaionFrame > 50)
-	{
-		currAnimaionFrame = 0;
-		elapsedFrame = 0;
-	}
 
 	if (roundCount == 1)
 	{
+		elapsedFrame++;
+		currAnimaionFrame = elapsedFrame;
+		if (currAnimaionFrame > 50)
+		{
+			currAnimaionFrame = 0;
+			elapsedFrame = 0;
+		}
+
 		timelEapsedFrame2++;
 		timeFrame2 = timelEapsedFrame2 / 30;
 		if (timeFrame2 > 9)
@@ -107,7 +138,14 @@ COLORREF GetHPColor(int hp, int maxHP) {
 void UI::Render(HDC hdc)
 {
 	if (BackGround_Image)
-	   	BackGround_Image->backRender(hdc, pos.x, pos.y, currAnimaionFrame, false);
+		BackGround_Image->backRender(hdc, pos.x, pos.y, currAnimaionFrame, false);
+}
+
+
+void UI::Start_Render(HDC hdc)
+{
+	if (Start_BackGround_Image)
+		Start_BackGround_Image->backRender(hdc, pos.x, pos.y, startFrame, false);
 }
 
 void UI::StartUI()

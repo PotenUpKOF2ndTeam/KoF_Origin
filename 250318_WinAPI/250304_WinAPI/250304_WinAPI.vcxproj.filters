@@ -51,6 +51,9 @@
     <ClCompile Include="HitDetection.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -84,6 +87,9 @@
       <Filter>MainGame\KOF_Character</Filter>
     </ClInclude>
     <ClInclude Include="HitDetection.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

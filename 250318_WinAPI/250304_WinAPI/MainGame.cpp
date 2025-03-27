@@ -135,7 +135,12 @@ void MainGame::Render(HDC hdc)
 	// 백버퍼에 먼저 복사
 	HDC hBackBufferDC = backBuffer->GetMemDC();
 
-	if (Ui) {
+	if (Ui && Ui->GetRoundCount() == 0) {
+		
+		Ui->Start_Render(hBackBufferDC);
+	}
+
+	if (Ui && Ui->GetRoundCount() == 1) {
 		Ui->Render(hBackBufferDC);
 		Ui->TimeUI1(hBackBufferDC, WINSIZE_X / 2 - 34, 50);
 		Ui->TimeUI2(hBackBufferDC, WINSIZE_X / 2 + 17, 50);
