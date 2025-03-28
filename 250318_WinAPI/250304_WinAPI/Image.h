@@ -80,6 +80,7 @@ public:
 	void Render(HDC hdc, int destX, int destY, int currFrameY, int frameIndex, bool isFlip = false);
 	void Render_set(HDC hdc, int destX, int destY, int frameIndex, bool isFlip);
 	void backRender(HDC hdc, int destX, int destY, int frameIndex, bool isFlip);
+	void StartbackRender(HDC hdc, int destX, int destY, int frameIndexY, bool isFlip);
 
 	// 메모리 해제
 	void Release();

@@ -7,7 +7,7 @@ void UI::Init()
 	pos = { 0.0f, 0.0f };
 
 	Start_BackGround_Image = new Image();
-	if (FAILED(Start_BackGround_Image->Init_2(TEXT("Image/BackGround.bmp"), 1080, 25000, 1, 50)))
+	if (FAILED(Start_BackGround_Image->Init_2(TEXT("Image/StartBackGround.bmp"), 1080, 126144, 1, 288)))
 	{
 		MessageBox(g_hWnd, TEXT("Image/BackGround.bmp 파일 로드에 실패"), TEXT("경고"), MB_OK);
 	}
@@ -86,7 +86,7 @@ void UI::Update()
 	{
 		startElapsedFrame++;
 		startFrame = startElapsedFrame;
-		if (startFrame > 50)
+		if (startFrame > 288)
 		{
 			startFrame = 0;
 			startElapsedFrame = 0;
@@ -145,7 +145,7 @@ void UI::Render(HDC hdc)
 void UI::Start_Render(HDC hdc)
 {
 	if (Start_BackGround_Image)
-		Start_BackGround_Image->backRender(hdc, pos.x, pos.y, startFrame, false);
+		Start_BackGround_Image->StartbackRender(hdc, pos.x, pos.y, startFrame, false);
 }
 
 void UI::StartUI()
